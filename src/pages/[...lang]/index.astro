@@ -1,0 +1,73 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+import Intro from "../../components/Intro/Intro";
+
+import Services from "../../components/Services.astro";
+import Portfolio from "../../components/Portfolio.astro";
+import Blog from "../../components/Blog.astro";
+import Footer from "../../components/Footer.astro";
+import Experience from "../../components/Experience/Experience";
+
+import { siteData } from "../../data/copy";
+import "../../styles/global.scss";
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: undefined }, props: { lang: "fr" } },
+        { params: { lang: "en" }, props: { lang: "en" } },
+    ];
+}
+
+const { lang } = Astro.props;
+const data = siteData[lang as "fr" | "en"];
+---
+
+<Layout title={data.meta.title} lang={lang as "fr" | "en"}>
+    <Intro client:load content={data.intro} stack={data.intro.stack} />
+
+    <main id="main">
+        <div class="container">
+            <Experience
+                client:visible
+                title={data.experience.title}
+                jobs={data.experience.jobs}
+                limit={2}
+                seeMoreLink={lang === "en" ? "/en/resume" : "/resume"}
+                seeMoreLabel={data.experience.seeMore}
+            />
+        </div>
+
+        <div class="container">
+            <div class="row section-grid">
+                <div class="col-md-6">
+                    <Portfolio lang={lang as "fr" | "en"} limit={3} />
+                </div>
+                <div class="col-md-6">
+                    <Blog lang={lang as "fr" | "en"} limit={3} />
+                </div>
+            </div>
+        </div>
+
+        <Footer lang={lang as "fr" | "en"} />
+    </main>
+</Layout>
+
+<style>
+    main {
+        background-color: var(--bg);
+        position: relative;
+        z-index: 2;
+    }
+
+    .section-title {
+        color: var(--text);
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+    .section-grid {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+</style>

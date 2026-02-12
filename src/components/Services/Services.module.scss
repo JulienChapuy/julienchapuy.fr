@@ -1,0 +1,45 @@
+.service-box {
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 16px;
+    height: 100%;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    .service-ico {
+        margin-bottom: 1.5rem;
+
+        .ico-circle {
+            width: 60px;
+            height: 60px;
+            line-height: 58px;
+            font-size: 1.5rem;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            display: inline-block;
+            text-align: center;
+            border-radius: 12px;
+            color: var(--primary);
+        }
+    }
+
+    .service-content {
+        .s-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .s-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+    }
+}

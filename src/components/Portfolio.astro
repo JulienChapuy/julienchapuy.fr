@@ -1,0 +1,14 @@
+---
+import PortfolioReact from "./Portfolio/Portfolio";
+import { siteData } from "../data/copy";
+
+interface Props {
+  lang: "fr" | "en";
+  limit?: number;
+}
+
+const { lang, limit } = Astro.props;
+const content = siteData[lang].portfolio;
+---
+
+<PortfolioReact content={content} limit={limit} lang={lang} client:load />

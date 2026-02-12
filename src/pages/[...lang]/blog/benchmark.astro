@@ -1,0 +1,133 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Footer from "../../../components/Footer.astro";
+import { siteData } from "../../../data/copy";
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: undefined }, props: { lang: "fr" } },
+        { params: { lang: "en" }, props: { lang: "en" } },
+    ];
+}
+
+const { lang } = Astro.props;
+const data = siteData[lang as "fr" | "en"];
+const article = data.benchmarkArticle;
+
+const title = `${article.title} | ${data.meta.title}`;
+---
+
+<Layout title={title} lang={lang as "fr" | "en"}>
+    <div style="padding-top: 100px;">
+        <div class="container article-container">
+            <a href={lang === "fr" ? "/blog" : "/en/blog"} class="back-link">
+                &larr; {lang === "fr" ? "Retour au blog" : "Back to blog"}
+            </a>
+
+            <header class="article-header">
+                <h1 class="article-title">{article.title}</h1>
+                <p class="article-subtitle">{article.subtitle}</p>
+            </header>
+
+            <div class="article-content">
+                {
+                    article.content.map((paragraph) => (
+                        <p class="article-text">{paragraph}</p>
+                    ))
+                }
+
+                <div class="cta-container">
+                    <a
+                        href={article.galadrimLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                    >
+                        {article.galadrimLinkText} &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <Footer lang={lang as "fr" | "en"} />
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .article-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding-bottom: 4rem;
+        color: var(--text);
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .back-link:hover {
+        color: var(--text);
+    }
+
+    .article-header {
+        margin-bottom: 3rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 2rem;
+    }
+
+    .article-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .article-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    .article-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+
+    .article-text {
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-container {
+        margin-top: 3rem;
+        padding: 2rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary);
+        color: var(--bg);
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 700;
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+    }
+</style>

@@ -1,0 +1,266 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { siteData } from "../../data/copy";
+import Stack from "../../components/Stack/Stack";
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: undefined }, props: { lang: "fr" } },
+        { params: { lang: "en" }, props: { lang: "en" } },
+    ];
+}
+
+const { lang } = Astro.props;
+const data = siteData[lang as "fr" | "en"];
+const { nav, resumePage, intro, about, experience, education } = data;
+---
+
+<Layout
+    title={`${resumePage.title} | ${data.meta.title}`}
+    lang={lang as "fr" | "en"}
+>
+    <div class="resume-container route" style="margin-top: 80px;">
+        <div class="overlay-itro"></div>
+        <div class="resume-content container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <section id="summary" class="resume-section">
+                        <h2 class="section-title">{resumePage.summary}</h2>
+                        <div class="content-block">
+                            {
+                                about.aboutMe.map((paragraph) => (
+                                    <p set:html={paragraph} />
+                                ))
+                            }
+                        </div>
+                    </section>
+
+                    <hr />
+
+                    <section id="experience" class="resume-section">
+                        <h2 class="section-title">{resumePage.experience}</h2>
+                        {
+                            experience.jobs.map((job) => (
+                                <div class="item">
+                                    <div class="company">
+                                        <a
+                                            href={job.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {job.company}
+                                        </a>
+                                    </div>
+                                    {job.roles.map((role) => (
+                                        <div class="role-block">
+                                            <div class="header">
+                                                <h3 class="role">
+                                                    {role.role}
+                                                </h3>
+                                                <span class="period">
+                                                    {role.period}
+                                                </span>
+                                            </div>
+                                            <ul class="description">
+                                                {role.desc.map((point) => (
+                                                    <li set:html={point} />
+                                                ))}
+                                            </ul>
+                                            {role.stack &&
+                                                role.stack.length > 0 && (
+                                                    <div class="stack-list">
+                                                        {role.stack.map(
+                                                            (tech) => (
+                                                                <span
+                                                                    class="tech-badge"
+                                                                    title={
+                                                                        tech.name
+                                                                    }
+                                                                >
+                                                                    {tech.icon.startsWith(
+                                                                        "/",
+                                                                    ) ? (
+                                                                        <img
+                                                                            src={
+                                                                                tech.icon
+                                                                            }
+                                                                            alt={
+                                                                                tech.name
+                                                                            }
+                                                                            style="width: 70%; height: 70%; object-fit: contain;"
+                                                                        />
+                                                                    ) : (
+                                                                        <i
+                                                                            class={
+                                                                                tech.icon
+                                                                            }
+                                                                        />
+                                                                    )}
+                                                                </span>
+                                                            ),
+                                                        )}
+                                                    </div>
+                                                )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))
+                        }
+                    </section>
+
+                    <hr />
+
+                    <section id="education" class="resume-section">
+                        <h2 class="section-title">{resumePage.education}</h2>
+                        {
+                            education.items.map((item) => (
+                                <div class="item">
+                                    <div class="header">
+                                        <h3 class="role">{item.school}</h3>
+                                        <span class="period">
+                                            {item.period}
+                                        </span>
+                                    </div>
+                                    <div class="degree">{item.degree}</div>
+                                    <p class="description">{item.desc}</p>
+                                </div>
+                            ))
+                        }
+                    </section>
+
+                    <hr />
+
+                    <section id="skills" class="resume-section">
+                        <h2 class="section-title">{resumePage.skills}</h2>
+                        <Stack client:visible stack={intro.stack} />
+                    </section>
+
+                    <div class="text-center mt-5 mb-5 no-print">
+                        <a
+                            href="/docs/cv_francais.pdf"
+                            class="btn btn-primary d-inline-flex align-items-center gap-2"
+                        >
+                            <i class="fa fa-download"></i>
+                            {resumePage.download}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .resume-container {
+        color: var(--text);
+        padding-bottom: 4rem;
+    }
+    .section-title {
+        font-family: "Outfit", sans-serif;
+        font-weight: 800;
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(
+            135deg,
+            var(--text) 0%,
+            var(--text-muted) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .resume-section {
+        margin-bottom: 3rem;
+    }
+    .item {
+        margin-bottom: 2.5rem;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+    }
+    .role {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .period {
+        font-weight: 600;
+        color: var(--primary);
+        font-size: 0.9rem;
+        background: var(--primary-muted);
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+    }
+    .company {
+        margin-bottom: 1rem;
+    }
+    .company a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .company a:hover {
+        color: var(--primary);
+    }
+    .description {
+        list-style: none;
+        padding-left: 0;
+    }
+    .description li {
+        margin-bottom: 0.8rem;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+    .description li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid var(--border);
+        margin: 3rem 0;
+    }
+    @media print {
+        .no-print {
+            display: none;
+        }
+        .resume-container {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        .section-title {
+            -webkit-text-fill-color: var(--text) !important;
+            color: var(--text) !important;
+        }
+    }
+    .role-block {
+        margin-bottom: 2rem;
+    }
+    .role-block:last-child {
+        margin-bottom: 0;
+    }
+    .stack-list {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+        flex-wrap: wrap;
+        padding-left: 1.5rem;
+    }
+    .tech-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text-muted);
+        font-size: 1rem;
+    }
+</style>

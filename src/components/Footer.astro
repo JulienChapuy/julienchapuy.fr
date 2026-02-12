@@ -1,0 +1,13 @@
+---
+import FooterReact from "./Footer/Footer";
+import { siteData } from "../data/copy";
+
+interface Props {
+    lang: "fr" | "en";
+}
+
+const { lang } = Astro.props;
+const content = siteData[lang].contact;
+---
+
+<FooterReact content={content} client:load />

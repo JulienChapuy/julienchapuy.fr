@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+import BlogReact from "../../components/Blog/Blog";
+import Footer from "../../components/Footer.astro";
+import { siteData } from "../../data/copy";
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: undefined }, props: { lang: "fr" } },
+        { params: { lang: "en" }, props: { lang: "en" } },
+    ];
+}
+
+const { lang } = Astro.props;
+const data = siteData[lang as "fr" | "en"];
+const content = data.insights;
+
+const title = `${data.insights.title} | ${data.meta.title}`;
+---
+
+<Layout title={title} lang={lang as "fr" | "en"}>
+    <div style="padding-top: 100px;">
+        <BlogReact content={content} isDedicatedPage={true} client:load />
+        <Footer lang={lang as "fr" | "en"} />
+    </div>
+</Layout>

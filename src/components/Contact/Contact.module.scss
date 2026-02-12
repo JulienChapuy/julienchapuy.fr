@@ -1,0 +1,107 @@
+.contact-mf {
+    .box-shadow-full {
+        padding: 4rem;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: 20px;
+
+        @media (max-width: 767px) {
+            padding: 2rem;
+        }
+    }
+
+    .title-box-2 {
+        margin-bottom: 2.5rem;
+
+        .title-left {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+    }
+
+    .form-control {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 12px 16px;
+        border-radius: 8px;
+
+        &:focus {
+            background: var(--bg);
+            border-color: var(--primary);
+            color: var(--text);
+            box-shadow: none;
+        }
+    }
+
+    .contact-info-wrapper {
+        padding-left: 2rem;
+        border-left: 1px solid var(--border);
+
+        @media (max-width: 767px) {
+            padding-left: 0;
+            border-left: none;
+            padding-top: 3rem;
+        }
+
+        .contact-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .list-ico {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+
+                span {
+                    color: var(--primary);
+                    margin-right: 12px;
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+
+    .socials {
+        padding-left: 2rem;
+        margin-top: 2rem;
+
+        @media (max-width: 767px) {
+            padding-left: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 1rem;
+
+            .social-link {
+                span {
+                    width: 45px;
+                    height: 45px;
+                    line-height: 43px;
+                    display: inline-block;
+                    text-align: center;
+                    border: 1px solid var(--border);
+                    border-radius: 50%;
+                    color: var(--text);
+                    transition: all 0.2s;
+
+                    &:hover {
+                        border-color: var(--primary);
+                        color: var(--primary);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,58 @@
+.card-blog {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 16px;
+    height: 100%;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .card-category-box {
+        margin-bottom: 1.5rem;
+
+        .card-category {
+            .category {
+                color: var(--primary);
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                display: inline-block;
+                padding: 4px 12px;
+                border-radius: 6px;
+                margin: 0;
+            }
+        }
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 1rem;
+
+        a {
+            color: inherit;
+
+            &:hover {
+                color: var(--primary);
+            }
+        }
+    }
+
+    .card-description {
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+}
