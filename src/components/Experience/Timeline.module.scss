@@ -1,113 +1,113 @@
 .timeline-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
 
 .timeline-item {
-    position: relative;
-    padding-left: 2rem;
-    padding-bottom: 2.5rem;
-    border-left: 1px solid var(--text-muted); // Thin vertical bar
+  position: relative;
+  padding-left: 2rem;
+  padding-bottom: 2.5rem;
+  border-left: 1px solid var(--text-muted); // Thin vertical bar
 
-    &.is-last {
-        // border-left-color: transparent; // Keep the bar visible for the last item too
-        padding-bottom: 0;
-    }
+  &.is-last {
+    // border-left-color: transparent; // Keep the bar visible for the last item too
+    padding-bottom: 0;
+  }
 
-    &.is-active {
-        .timeline-bullet {
-            background-color: #86efac; // bg-green-300
-            border-color: #86efac;
-        }
-
-        // border-left-color: var(--primary); // Optional: if we want the bar to be colored too
-    }
-
+  &.is-active {
     .timeline-bullet {
-        position: absolute;
-        left: -8px; // Centered on 1px border: 0.5px - 8px = -7.5px ~ -8px
-        top: 0;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: var(--bg);
-        border: 2px solid var(--border);
-        z-index: 1;
+      background-color: #86efac; // bg-green-300
+      border-color: #86efac;
     }
 
-    .timeline-content {
-        .timeline-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-            line-height: 1.2;
-        }
+    // border-left-color: var(--primary); // Optional: if we want the bar to be colored too
+  }
 
-        .timeline-period {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-            font-family: monospace;
-        }
+  .timeline-bullet {
+    position: absolute;
+    left: -8px; // Centered on 1px border: 0.5px - 8px = -7.5px ~ -8px
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--bg);
+    border: 2px solid var(--border);
+    z-index: 1;
+  }
 
-        .timeline-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-
-            ul {
-                padding-left: 1.2rem;
-                margin: 0;
-
-                li {
-                    margin-bottom: 0.5rem;
-                    list-style-type: "▹ ";
-
-                    &::marker {
-                        color: var(--primary);
-                    }
-                }
-            }
-
-            p {
-                margin: 0;
-            }
-        }
-
-        .timeline-stack {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-
-            .tech-badge {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 2rem;
-                height: 2rem;
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: 4px;
-                color: var(--text-muted);
-                font-size: 1.2rem;
-                transition: all 0.2s ease;
-
-                img {
-                    width: 70%;
-                    height: 70%;
-                    object-fit: contain;
-                }
-
-                &:hover {
-                    color: var(--primary);
-                    border-color: var(--primary);
-                    transform: translateY(-2px);
-                }
-            }
-        }
+  .timeline-content {
+    .timeline-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
     }
+
+    .timeline-period {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      font-family: monospace;
+    }
+
+    .timeline-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+
+      ul {
+        padding-left: 1.2rem;
+        margin: 0;
+
+        li {
+          margin-bottom: 0.5rem;
+          list-style-type: '▹ ';
+
+          &::marker {
+            color: var(--primary);
+          }
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .timeline-stack {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+
+      .tech-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text-muted);
+        font-size: 1.2rem;
+        transition: all 0.2s ease;
+
+        img {
+          width: 70%;
+          height: 70%;
+          object-fit: contain;
+        }
+
+        &:hover {
+          color: var(--primary);
+          border-color: var(--primary);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
 }

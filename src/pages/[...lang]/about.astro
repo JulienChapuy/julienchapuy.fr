@@ -1,32 +1,32 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from '../../layouts/Layout.astro';
 
-import AboutReact from "../../components/About/About";
-import StackReact from "../../components/Stack/Stack";
-import StatsReact from "../../components/Stats/Stats";
-import Footer from "../../components/Footer.astro";
-import { siteData } from "../../data/copy";
+import AboutReact from '../../components/About/About';
+import StackReact from '../../components/Stack/Stack';
+import StatsReact from '../../components/Stats/Stats';
+import Footer from '../../components/Footer.astro';
+import { siteData } from '../../data/copy';
 
 export async function getStaticPaths() {
-    return [
-        { params: { lang: undefined }, props: { lang: "fr" } },
-        { params: { lang: "en" }, props: { lang: "en" } },
-    ];
+  return [
+    { params: { lang: undefined }, props: { lang: 'fr' } },
+    { params: { lang: 'en' }, props: { lang: 'en' } },
+  ];
 }
 
 const { lang } = Astro.props;
-const data = siteData[lang as "fr" | "en"];
+const data = siteData[lang as 'fr' | 'en'];
 const aboutContent = data.about;
 const statsContent = data.stats;
 
 const title =
-    lang === "fr" ? "À Propos - Julien Chapuy" : "About - Julien Chapuy";
+  lang === 'fr' ? 'À Propos - Julien Chapuy' : 'About - Julien Chapuy';
 ---
 
-<Layout title={title} lang={lang as "fr" | "en"}>
-    <div style="padding-top: 80px;">
-        <AboutReact content={aboutContent} client:load />
-        <StatsReact content={statsContent} client:load />
-        <Footer lang={lang as "fr" | "en"} />
-    </div>
+<Layout title={title} lang={lang as 'fr' | 'en'}>
+  <div style="padding-top: 80px;">
+    <AboutReact content={aboutContent} client:load />
+    <StatsReact content={statsContent} client:only="react" />
+    <Footer lang={lang as 'fr' | 'en'} />
+  </div>
 </Layout>

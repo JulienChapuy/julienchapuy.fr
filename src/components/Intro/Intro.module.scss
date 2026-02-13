@@ -1,100 +1,100 @@
 .intro {
-    min-height: 100vh;
-    padding: 0 1rem;
+  min-height: 100vh;
+  padding: 0 1rem;
+  position: relative;
+
+  .spline {
+    position: absolute;
+    inset: 0;
+    left: 30%; // Move the container to start at 30% from the left
+    width: 70%; // Fill the remaining width
+    z-index: 10;
+    overflow: hidden; // Keep the 3D scene contained
+    /* create a smooth fade out at the bottom */
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+
+    .splineScene {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .content {
     position: relative;
+    z-index: 20;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    /* Match section height behavior since flex needs height */
+    pointer-events: none;
+    /* Let clicks pass through to potential interactive background elements if needed, but text needs events */
 
-    .spline {
-        position: absolute;
-        inset: 0;
-        left: 30%; // Move the container to start at 30% from the left
-        width: 70%; // Fill the remaining width
-        z-index: 10;
-        overflow: hidden; // Keep the 3D scene contained
-        /* create a smooth fade out at the bottom */
-        mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-
-        .splineScene {
-            width: 100%;
-            height: 100%;
-        }
+    /* Restore pointer events for content children */
+    > * {
+      pointer-events: auto;
     }
+  }
 
-    .content {
-        position: relative;
-        z-index: 20;
-        max-width: 1000px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        height: 100vh;
-        /* Match section height behavior since flex needs height */
-        pointer-events: none;
-        /* Let clicks pass through to potential interactive background elements if needed, but text needs events */
+  .greeting {
+    color: var(--primary);
+    font-family: monospace;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
 
-        /* Restore pointer events for content children */
-        >* {
-            pointer-events: auto;
-        }
+  .intro-title {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .intro-role {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .intro-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  }
+
+  .btn-intro {
+    display: inline-block;
+    padding: 1rem 1.75rem;
+    font-size: 0.9rem;
+    font-family: monospace;
+    color: var(--primary);
+    background: transparent;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    text-decoration: none;
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.1);
+      transform: translateY(-2px);
     }
+  }
 
-    .greeting {
-        color: var(--primary);
-        font-family: monospace;
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .intro-title {
-        font-size: clamp(3rem, 8vw, 5rem);
-        font-weight: 800;
-        color: var(--text);
-        line-height: 1.1;
-        margin-bottom: 1rem;
-    }
-
-    .intro-role {
-        font-size: clamp(2rem, 5vw, 4rem);
-        font-weight: 700;
-        color: var(--text-muted);
-        line-height: 1.1;
-        margin-bottom: 2rem;
-    }
-
-    .intro-subtitle {
-        font-size: 1.1rem;
-        color: var(--text-muted);
-        max-width: 540px;
-        margin-bottom: 3rem;
-        line-height: 1.6;
-    }
-
-    .btn-intro {
-        display: inline-block;
-        padding: 1rem 1.75rem;
-        font-size: 0.9rem;
-        font-family: monospace;
-        color: var(--primary);
-        background: transparent;
-        border: 1px solid var(--primary);
-        border-radius: 4px;
-        transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-        text-decoration: none;
-
-        &:hover {
-            background: rgba(99, 102, 241, 0.1);
-            transform: translateY(-2px);
-        }
-    }
-
-    .stackLoopWrapper {
-        position: absolute;
-        bottom: -4rem; // Move partially out of the section to bridge the gap
-        left: 0;
-        width: 100%;
-        z-index: 30; // Above content and spline
-        pointer-events: auto; // Ensure it's interactive
-    }
+  .stackLoopWrapper {
+    position: absolute;
+    bottom: -4rem; // Move partially out of the section to bridge the gap
+    left: 0;
+    width: 100%;
+    z-index: 30; // Above content and spline
+    pointer-events: auto; // Ensure it's interactive
+  }
 }

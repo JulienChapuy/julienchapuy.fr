@@ -1,24 +1,24 @@
 ---
-import NavbarReact from "./Navbar/Navbar";
-import { siteData } from "../data/copy";
+import NavbarReact from './Navbar/Navbar';
+import { siteData } from '../data/copy';
 
 interface Props {
-    lang: "fr" | "en";
+  lang: 'fr' | 'en';
 }
 
 const { lang: initialLang } = Astro.props;
 ---
 
 <NavbarReact
-    initialLang={initialLang}
-    initialPath={Astro.url.pathname}
-    allLabels={{
-        fr: siteData.fr.nav,
-        en: siteData.en.nav,
-    }}
-    allContact={{
-        fr: siteData.fr.contact,
-        en: siteData.en.contact,
-    }}
-    client:load
+  initialLang={initialLang}
+  initialPath={Astro.url.pathname}
+  allLabels={{
+    fr: siteData.fr.nav,
+    en: siteData.en.nav,
+  }}
+  allContact={{
+    fr: siteData.fr.contact,
+    en: siteData.en.contact,
+  }}
+  client:load
 />

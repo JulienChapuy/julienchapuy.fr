@@ -1,32 +1,28 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from '../../layouts/Layout.astro';
 
-import PortfolioReact from "../../components/Portfolio/Portfolio";
-import Footer from "../../components/Footer.astro";
-import { siteData } from "../../data/copy";
+import PortfolioReact from '../../components/Portfolio/Portfolio';
+import Footer from '../../components/Footer.astro';
+import { siteData } from '../../data/copy';
 
 export async function getStaticPaths() {
-    return [
-        { params: { lang: undefined }, props: { lang: "fr" } },
-        { params: { lang: "en" }, props: { lang: "en" } },
-    ];
+  return [
+    { params: { lang: undefined }, props: { lang: 'fr' } },
+    { params: { lang: 'en' }, props: { lang: 'en' } },
+  ];
 }
 
 const { lang } = Astro.props;
-const data = siteData[lang as "fr" | "en"];
+const data = siteData[lang as 'fr' | 'en'];
 const content = data.portfolio;
 
 const title =
-    lang === "fr" ? "Projets - Julien Chapuy" : "Projects - Julien Chapuy";
+  lang === 'fr' ? 'Projets - Julien Chapuy' : 'Projects - Julien Chapuy';
 ---
 
-<Layout title={title} lang={lang as "fr" | "en"}>
-    <div style="padding-top: 80px;">
-        <PortfolioReact
-            content={content}
-            lang={lang as "fr" | "en"}
-            client:load
-        />
-        <Footer lang={lang as "fr" | "en"} />
-    </div>
+<Layout title={title} lang={lang as 'fr' | 'en'}>
+  <div style="padding-top: 80px;">
+    <PortfolioReact content={content} lang={lang as 'fr' | 'en'} client:load />
+    <Footer lang={lang as 'fr' | 'en'} />
+  </div>
 </Layout>

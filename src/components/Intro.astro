@@ -1,13 +1,13 @@
 ---
-import IntroReact from "./Intro/Intro";
-import { siteData } from "../data/copy";
+import IntroReact from './Intro/Intro';
+import { siteData } from '../data/copy';
 
 interface Props {
-    lang: "fr" | "en";
+  lang: 'fr' | 'en';
 }
 
 const { lang } = Astro.props;
 const content = siteData[lang].intro;
 ---
 
-<IntroReact content={content} client:load />
+<IntroReact content={content} stack={content.stack} client:load />
