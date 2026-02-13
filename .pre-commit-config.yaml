@@ -1,0 +1,27 @@
+repos:
+  - repo: local
+    hooks:
+      - id: format
+        name: format
+        entry: bun run format
+        language: system
+        types: [text]
+        pass_filenames: false
+      - id: lint
+        name: lint
+        entry: bun run lint
+        language: system
+        types: [text]
+        pass_filenames: false
+      - id: typecheck
+        name: typecheck
+        entry: bun run typecheck
+        language: system
+        types: [text]
+        pass_filenames: false
+      - id: build
+        name: build
+        entry: bun run build
+        language: system
+        types: [text]
+        pass_filenames: false

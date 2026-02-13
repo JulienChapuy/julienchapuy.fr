@@ -6,7 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "astro check && tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -18,7 +21,20 @@
     "devicon": "^2.17.0",
     "framer-motion": "^12.32.0",
     "react": "^19.2.4",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.2.4",
     "sass": "^1.97.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "astro-eslint-parser": "^1.2.2",
+    "eslint": "^10.0.0",
+    "eslint-plugin-astro": "^1.5.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.55.0"
   }
 }
