@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import { siteData } from '../data/copy';
+
+const { notFound } = siteData.fr;
+const { notFound: notFoundEn } = siteData.en;
+---
+
+<Layout title={notFound.title} lang="fr">
+  <main id="main">
+    <div class="container error-container">
+      <h1 class="error-title">404</h1>
+      <h2 id="error-subtitle" class="error-subtitle">{notFound.title}</h2>
+      <p id="error-desc" class="error-desc">{notFound.description}</p>
+      <a id="error-btn" href="/" class="btn-primary">{notFound.btn}</a>
+    </div>
+    <Footer lang="fr" />
+  </main>
+
+  <script is:inline define:vars={{ notFoundEn: notFoundEn }}>
+    function update404Content() {
+      const path = window.location.pathname;
+      const isEnglish = path.startsWith('/en');
+
+      if (isEnglish) {
+        document.documentElement.lang = 'en';
+        document.title = notFoundEn.title;
+        const subtitle = document.getElementById('error-subtitle');
+        if (subtitle) subtitle.innerText = notFoundEn.title;
+
+        const desc = document.getElementById('error-desc');
+        if (desc) desc.innerText = notFoundEn.description;
+
+        const btn = document.getElementById('error-btn');
+        if (btn) {
+          btn.innerText = notFoundEn.btn;
+          btn.href = '/en';
+        }
+      }
+    }
+
+    update404Content();
+    document.addEventListener('astro:after-swap', update404Content);
+  </script>
+</Layout>
+
+<style>
+  main {
+    background-color: var(--bg);
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .error-container {
+    text-align: center;
+    padding: 12rem 0 4rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .error-title {
+    font-size: 8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .error-subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .error-desc {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: var(--primary);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+    opacity: 0.9;
+  }
+</style>

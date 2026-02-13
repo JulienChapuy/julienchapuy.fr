@@ -1,101 +1,83 @@
 ---
 interface Props {
-    title: string;
-    lang?: "fr" | "en";
+  title: string;
+  lang?: 'fr' | 'en';
 }
 
-const { title, lang = "fr" } = Astro.props;
-import "devicon/devicon.min.css";
-import Navbar from "../components/Navbar.astro";
-import { ClientRouter } from "astro:transitions";
+const { title, lang = 'fr' } = Astro.props;
+import 'devicon/devicon.min.css';
+import Navbar from '../components/Navbar.astro';
+import { ClientRouter } from 'astro:transitions';
+import BackToTop from '../components/ui/BackToTop';
 ---
 
 <!doctype html>
 <html lang={lang}>
-    <head>
-        <ClientRouter />
-        <meta charset="UTF-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta content="" name="keywords" />
-        <meta content="" name="description" />
-        <meta name="author" content="Julien Chapuy" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
+  <head>
+    <ClientRouter />
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <meta name="author" content="Julien Chapuy" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
 
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-        <!-- Favicons -->
-        <link href="/assets/img/icon.png" rel="icon" />
-        <link href="/assets/img/icon.png" rel="apple-touch-icon" />
+    <!-- Favicons -->
+    <link href="/assets/img/icon.png" rel="icon" />
+    <link href="/assets/img/icon.png" rel="apple-touch-icon" />
 
-        <!-- Bootstrap CSS File -->
-        <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS File -->
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-        <!-- Libraries CSS Files -->
-        <link
-            href="/lib/font-awesome/css/font-awesome.min.css"
-            rel="stylesheet"
-        />
-        <link href="/lib/animate/animate.min.css" rel="stylesheet" />
-        <link href="/lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
-        <link
-            href="/lib/owlcarousel/assets/owl.carousel.min.css"
-            rel="stylesheet"
-        />
-        <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+    <!-- Libraries CSS Files -->
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
 
-        <!-- Main Stylesheet File -->
-        <link href="/assets/css/style.css" rel="stylesheet" />
+    <!-- Main Stylesheet File -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
 
-        <style is:global>
-            @import "../styles/global.scss";
-        </style>
-        <script is:inline>
-            (function () {
-                function applyTheme() {
-                    const savedTheme = localStorage.getItem("theme");
-                    const systemTheme = window.matchMedia(
-                        "(prefers-color-scheme: dark)",
-                    ).matches
-                        ? "dark"
-                        : "light";
-                    const theme = savedTheme || systemTheme;
-                    document.documentElement.setAttribute("data-theme", theme);
-                }
+    <style is:global>
+      @import '../styles/global.scss';
+    </style>
+    <script is:inline>
+      (function () {
+        function applyTheme() {
+          const savedTheme = localStorage.getItem('theme');
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+            .matches
+            ? 'dark'
+            : 'light';
+          const theme = savedTheme || systemTheme;
+          document.documentElement.setAttribute('data-theme', theme);
+        }
 
-                applyTheme();
-                document.addEventListener("astro:after-swap", applyTheme);
-            })();
-        </script>
-    </head>
-    <body id="page-top">
-        <Navbar lang={lang} />
-        <slot />
+        applyTheme();
+        document.addEventListener('astro:after-swap', applyTheme);
+      })();
+    </script>
+  </head>
+  <body id="page-top">
+    <Navbar lang={lang} />
+    <slot />
 
-        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <BackToTop client:load />
 
-        <!-- JavaScript Libraries -->
-        <script is:inline src="/lib/jquery/jquery.min.js"></script>
-        <script is:inline src="/lib/jquery/jquery-migrate.min.js"></script>
-        <script is:inline src="/lib/popper/popper.min.js"></script>
-        <script is:inline src="/lib/bootstrap/js/bootstrap.min.js"></script>
-        <script is:inline src="/lib/easing/easing.min.js"></script>
-        <script is:inline src="/lib/counterup/jquery.waypoints.min.js"></script>
-        <script is:inline src="/lib/counterup/jquery.counterup.js"></script>
-        <script is:inline src="/lib/owlcarousel/owl.carousel.min.js"></script>
-        <script is:inline src="/lib/lightbox/js/lightbox.min.js"></script>
-        <script is:inline src="/lib/typed/typed.min.js"></script>
+    <!-- JavaScript Libraries -->
+    <!-- Removed legacy jQuery and plugins -->
 
-        <!-- Template Main Javascript File -->
-        <!-- Note: Contact form validation script is excluded for now as PHP is not supported -->
-        <!-- <script src="/assets/vendor/php-email-form/validate.js"></script> -->
+    <!-- Template Main Javascript File -->
+    <!-- Note: Contact form validation script is excluded for now as PHP is not supported -->
+    <!-- <script src="/assets/vendor/php-email-form/validate.js"></script> -->
 
-        <script is:inline src="/assets/js/main.js"></script>
-    </body>
+    <!-- <script is:inline src="/assets/js/main.js"></script> -->
+  </body>
 </html>
