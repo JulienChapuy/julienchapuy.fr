@@ -126,13 +126,120 @@
   }
 }
 
-// Add a mobile specific layout if needed, but for now let's keep it simple
+// Add a mobile specific layout if needed
 @media (max-width: 768px) {
   .navbar {
     padding: 0.5rem 1rem;
+    width: 95%;
 
     .nav-right {
       gap: 0.5rem;
+
+      // Hide the desktop 'Contact' button on mobile to save space
+      .btn-contact {
+        display: none;
+      }
+    }
+
+    .mobile-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 1002;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar {
+    .mobile-toggle {
+      display: none;
+    }
+  }
+
+  .mobile-menu-overlay {
+    display: none;
+  }
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(16px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .mobile-menu-content {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    li {
+      width: 100%;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    a,
+    button {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--primary);
+      }
+
+      &.active {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &.open {
+    .mobile-nav-links li {
+      opacity: 1;
+      transform: translateY(0);
+
+      // Stagger animation
+      @for $i from 1 through 6 {
+        &:nth-child(#{$i}) {
+          transition-delay: #{$i * 0.1}s;
+        }
+      }
     }
   }
 }

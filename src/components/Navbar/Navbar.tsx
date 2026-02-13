@@ -43,6 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const [currentPath, setCurrentPath] = React.useState(initialPath);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   // Derived language from path
   const getLangFromPath = (path: string): 'fr' | 'en' => {
@@ -58,6 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({
       const path = window.location.pathname;
       setCurrentPath(path);
       setLang(getLangFromPath(path));
+      setIsMobileMenuOpen(false); // Close mobile menu on navigation
     };
 
     // Initial sync in case initialPath from props was slightly different or stale
@@ -109,6 +111,10 @@ const Navbar: React.FC<NavbarProps> = ({
     lang === 'en'
       ? currentPath.replace('/en', '') || '/'
       : `/en${currentPath === '/' ? '' : currentPath}`;
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <>
@@ -179,9 +185,84 @@ const Navbar: React.FC<NavbarProps> = ({
               {lang === 'fr' ? 'EN' : 'FR'}
             </a>
             <ThemeToggle />
+            <button
+              className={styles['mobile-toggle']}
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
+              <i
+                className={`fa ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}
+                aria-hidden="true"
+              />
+            </button>
           </div>
         </div>
       </nav>
+
+      <div
+        className={`${styles['mobile-menu-overlay']} ${isMobileMenuOpen ? styles.open : ''}`}
+      >
+        <div className={styles['mobile-menu-content']}>
+          <ul className={styles['mobile-nav-links']}>
+            <li>
+              <a
+                className={`${isActive('/') ? styles.active : ''}`}
+                href={homeLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {labels.home}
+              </a>
+            </li>
+            <li>
+              <a
+                className={`${isActive('about') ? styles.active : ''}`}
+                href={aboutLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {labels.about}
+              </a>
+            </li>
+            <li>
+              <a
+                className={`${isActive('projects') ? styles.active : ''}`}
+                href={projectsLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {labels.work}
+              </a>
+            </li>
+            <li>
+              <a
+                className={`${isActive('blog') ? styles.active : ''}`}
+                href={blogLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {labels.blog}
+              </a>
+            </li>
+            <li>
+              <a
+                className={`${isActive('resume') ? styles.active : ''}`}
+                href={resumeLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {labels.resume}
+              </a>
+            </li>
+            <li>
+              <button
+                className={styles['mobile-contact-btn']}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsModalOpen(true);
+                }}
+              >
+                {labels.contact}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <ContactModal
         isOpen={isModalOpen}
