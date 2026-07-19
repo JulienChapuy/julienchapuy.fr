@@ -43,6 +43,8 @@ const Experience: React.FC<ExperienceProps> = ({
             <button
               key={index}
               role="tab"
+              id={`experience-tab-${index}`}
+              aria-controls={`experience-panel-${index}`}
               aria-selected={activeTab === index}
               className={activeTab === index ? styles.active : ''}
               onClick={() => setActiveTab(index)}
@@ -80,7 +82,12 @@ const Experience: React.FC<ExperienceProps> = ({
           )}
         </div>
 
-        <div className={styles['tab-content']}>
+        <div
+          className={styles['tab-content']}
+          id={`experience-panel-${activeTab}`}
+          role="tabpanel"
+          aria-labelledby={`experience-tab-${activeTab}`}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}

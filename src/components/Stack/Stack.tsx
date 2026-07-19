@@ -1,40 +1,30 @@
 import React, { useState } from 'react';
 import styles from './Stack.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface TechItem {
-  name: string;
-  icon: string;
-  level?: 'master' | 'learning';
-}
-
-interface StackCategory {
-  category: string;
-  items: TechItem[];
-}
+import type { StackCategory, StackItem } from '../../types/site';
 
 interface StackProps {
-  stack: StackCategory[] | TechItem[]; // Support both for backward compatibility or transition
+  stack: StackCategory[] | StackItem[];
 }
 
 const Stack: React.FC<StackProps> = ({ stack }) => {
-  // Guard clause: if stack is simple array (legacy), wrap it in "All"
   const normalizedStack: StackCategory[] =
-    Array.isArray(stack) && 'category' in stack[0]
+    Array.isArray(stack) && stack.length > 0 && 'category' in stack[0]
       ? (stack as StackCategory[])
-      : [{ category: 'All', items: stack as TechItem[] }];
+      : [{ category: 'All', items: stack as StackItem[] }];
 
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
     <section className={styles['stack-container']}>
-      {/* Only show categories if there's more than one (and not just "All" wrapper) */}
       {normalizedStack.length > 1 && (
         <div className={styles['tabs-nav']} role="tablist">
           {normalizedStack.map((cat, index) => (
             <button
               key={index}
               role="tab"
+              id={`stack-tab-${index}`}
+              aria-controls={`stack-panel-${index}`}
               aria-selected={activeCategory === index}
               className={activeCategory === index ? styles.active : ''}
               onClick={() => setActiveCategory(index)}
@@ -49,6 +39,9 @@ const Stack: React.FC<StackProps> = ({ stack }) => {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
+            id={`stack-panel-${activeCategory}`}
+            role="tabpanel"
+            aria-labelledby={`stack-tab-${activeCategory}`}
             className={styles['grid-container']}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

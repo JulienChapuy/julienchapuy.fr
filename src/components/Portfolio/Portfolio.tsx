@@ -13,11 +13,12 @@ interface PortfolioProps {
   content: {
     title: string;
     subtitle: string;
-    seeMore?: string; // Add optional seeMore label
+    empty?: string;
+    seeMore?: string;
     items: PortfolioItem[];
   };
-  limit?: number; // Add optional limit prop
-  lang?: 'fr' | 'en'; // Add optional lang prop to redirect correctly
+  limit?: number;
+  lang?: 'fr' | 'en';
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({
@@ -46,30 +47,44 @@ const Portfolio: React.FC<PortfolioProps> = ({
           </div>
         </div>
         <div className="row" style={{ marginTop: '4rem' }}>
-          {displayedItems.map((item, index) => (
-            <div key={index} className={colClass}>
-              <div className={styles['work-box']}>
-                <a href={item.link}>
-                  <div className={styles['work-img']}>
-                    <img src={item.img} alt="" className="img-fluid" />
-                  </div>
-                  <div className={styles['work-content']}>
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <h2 className={styles['w-title']}>{item.title}</h2>
-                        <div className={styles['w-more']}>
-                          <span className={styles['w-ctegory']}>
-                            {item.category}
-                          </span>
-                          <p className={styles['w-tech']}>{item.tech}</p>
+          {displayedItems.length > 0 ? (
+            displayedItems.map((item, index) => (
+              <div key={index} className={colClass}>
+                <div className={styles['work-box']}>
+                  <a href={item.link}>
+                    <div className={styles['work-img']}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="img-fluid"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className={styles['work-content']}>
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <h2 className={styles['w-title']}>{item.title}</h2>
+                          <div className={styles['w-more']}>
+                            <span className={styles['w-ctegory']}>
+                              {item.category}
+                            </span>
+                            <p className={styles['w-tech']}>{item.tech}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="col-12 text-center">
+              <p className="subtitle-a">
+                {content.empty || 'No projects published yet.'}
+              </p>
             </div>
-          ))}
+          )}
         </div>
         {limit && content.items.length > limit && (
           <div className="text-center" style={{ marginTop: '3rem' }}>
