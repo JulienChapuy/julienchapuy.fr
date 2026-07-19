@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Intro.module.scss';
-import { motion } from 'framer-motion';
 import { SplineScene } from '../ui/SplineScene';
 import LogoLoop from '../Stack/LogoLoop';
+import type { StackCategory } from '../../types/site';
 
 interface IntroProps {
   content: {
@@ -12,7 +12,7 @@ interface IntroProps {
     subRoles?: string;
     btn: string;
   };
-  stack: any[]; // Using any[] for now to avoid extensive type imports, but should ideally be typed
+  stack: StackCategory[];
 }
 
 const Intro: React.FC<IntroProps> = ({ content, stack }) => {

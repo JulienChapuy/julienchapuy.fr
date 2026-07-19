@@ -1,6 +1,7 @@
 'use client';
 
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
+
 const Spline = lazy(() => import('@splinetool/react-spline'));
 
 interface SplineSceneProps {
@@ -9,33 +10,36 @@ interface SplineSceneProps {
 }
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
-  // Suppress specific Spline logs
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const originalConsoleLog = console.log;
-      console.log = (...args) => {
-        if (
-          args[0] &&
-          typeof args[0] === 'string' &&
-          args[0].includes('Updating pivot for object')
-        ) {
-          return;
-        }
-        originalConsoleLog(...args);
-      };
+  const [isReady, setIsReady] = useState(false);
 
-      return () => {
-        console.log = originalConsoleLog;
-      };
+  useEffect(() => {
+    const load = () => setIsReady(true);
+
+    if (typeof window.requestIdleCallback === 'function') {
+      const idleId = window.requestIdleCallback(load, { timeout: 1800 });
+      return () => window.cancelIdleCallback(idleId);
     }
+
+    const timer = window.setTimeout(load, 1200);
+    return () => window.clearTimeout(timer);
   }, []);
+
+  if (!isReady) {
+    return (
+      <div
+        className={`${className || ''} spline-placeholder`}
+        aria-hidden="true"
+      />
+    );
+  }
 
   return (
     <Suspense
       fallback={
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="loader"></span>
-        </div>
+        <div
+          className={`${className || ''} spline-placeholder`}
+          aria-hidden="true"
+        />
       }
     >
       <Spline scene={scene} className={className} />
