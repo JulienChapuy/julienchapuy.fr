@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Navbar.module.scss';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import ContactModal from '../Contact/ContactModal';
+import type { ContactContent } from '../../types/site';
 
 interface NavbarProps {
   initialLang: 'fr' | 'en';
@@ -11,7 +12,6 @@ interface NavbarProps {
       brand: string;
       home: string;
       about: string;
-      services: string;
       work: string;
       blog: string;
       resume: string;
@@ -21,17 +21,13 @@ interface NavbarProps {
       brand: string;
       home: string;
       about: string;
-      services: string;
       work: string;
       blog: string;
       resume: string;
       contact: string;
     };
   };
-  allContact: {
-    fr: any;
-    en: any;
-  };
+  allContact: Record<'fr' | 'en', ContactContent>;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -45,13 +41,12 @@ const Navbar: React.FC<NavbarProps> = ({
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
-  // Derived language from path
   const getLangFromPath = (path: string): 'fr' | 'en' => {
-    return path.startsWith('/en') ? 'en' : 'fr';
+    return /^\/en(?:\/|$)/.test(path) ? 'en' : 'fr';
   };
 
   const [lang, setLang] = React.useState<'fr' | 'en'>(
-    getLangFromPath(initialPath)
+    initialLang || getLangFromPath(initialPath)
   );
 
   React.useEffect(() => {
@@ -59,10 +54,9 @@ const Navbar: React.FC<NavbarProps> = ({
       const path = window.location.pathname;
       setCurrentPath(path);
       setLang(getLangFromPath(path));
-      setIsMobileMenuOpen(false); // Close mobile menu on navigation
+      setIsMobileMenuOpen(false);
     };
 
-    // Initial sync in case initialPath from props was slightly different or stale
     updatePath();
 
     const handleScroll = () => {
@@ -74,7 +68,6 @@ const Navbar: React.FC<NavbarProps> = ({
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Astro View Transitions event
     document.addEventListener('astro:after-navigation', updatePath);
 
     return () => {
@@ -86,30 +79,27 @@ const Navbar: React.FC<NavbarProps> = ({
   const labels = allLabels[lang];
   const contactContent = allContact[lang];
 
-  // Helper to determine active state
   const isActive = (path: string) => {
     if (
       path === '/' &&
       (currentPath === '/' || currentPath === '/en' || currentPath === '/en/')
     )
       return true;
-    if (path !== '/' && path !== '#' && currentPath.includes(path)) return true;
+    if (path !== '/' && path !== '#' && currentPath === path) return true;
     return false;
   };
 
   const basePath = lang === 'fr' ? '' : '/en';
 
-  // Navigation Links
   const homeLink = lang === 'fr' ? '/' : '/en';
   const aboutLink = `${basePath}/about`;
   const projectsLink = `${basePath}/projects`;
   const blogLink = `${basePath}/blog`;
   const resumeLink = `${basePath}/resume`;
 
-  // Language Toggle Logic - removed window dependency for stable SSR
   const toggleLangLink =
     lang === 'en'
-      ? currentPath.replace('/en', '') || '/'
+      ? currentPath.replace(/^\/en(?=\/|$)/, '') || '/'
       : `/en${currentPath === '/' ? '' : currentPath}`;
 
   const toggleMobileMenu = () => {
@@ -189,6 +179,8 @@ const Navbar: React.FC<NavbarProps> = ({
               className={styles['mobile-toggle']}
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               <i
                 className={`fa ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}
@@ -200,6 +192,8 @@ const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       <div
+        id="mobile-navigation"
+        aria-hidden={!isMobileMenuOpen}
         className={`${styles['mobile-menu-overlay']} ${isMobileMenuOpen ? styles.open : ''}`}
       >
         <div className={styles['mobile-menu-content']}>

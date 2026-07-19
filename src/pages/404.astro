@@ -5,10 +5,17 @@ import { siteData } from '../data/copy';
 
 const { notFound } = siteData.fr;
 const { notFound: notFoundEn } = siteData.en;
+const contactFr = siteData.fr.contact;
+const contactEn = siteData.en.contact;
+const notFoundFr = notFound;
 ---
 
-<Layout title={notFound.title} lang="fr">
-  <main id="main">
+<Layout title={notFound.title} description={notFound.description} lang="fr">
+  <main
+    id="main"
+    data-contact-fr={JSON.stringify(contactFr)}
+    data-contact-en={JSON.stringify(contactEn)}
+  >
     <div class="container error-container">
       <h1 class="error-title">404</h1>
       <h2 id="error-subtitle" class="error-subtitle">{notFound.title}</h2>
@@ -18,25 +25,44 @@ const { notFound: notFoundEn } = siteData.en;
     <Footer lang="fr" />
   </main>
 
-  <script is:inline define:vars={{ notFoundEn: notFoundEn }}>
+  <script
+    is:inline
+    define:vars={{
+      notFoundFr,
+      notFoundEn,
+    }}
+  >
     function update404Content() {
       const path = window.location.pathname;
-      const isEnglish = path.startsWith('/en');
+      const isEnglish = /^\/en(?:\/|$)/.test(path);
+      const content = isEnglish ? notFoundEn : notFoundFr;
+      const root = document.getElementById('main');
+      const contact = JSON.parse(
+        root?.dataset[isEnglish ? 'contactEn' : 'contactFr'] || '{}'
+      );
 
-      if (isEnglish) {
-        document.documentElement.lang = 'en';
-        document.title = notFoundEn.title;
-        const subtitle = document.getElementById('error-subtitle');
-        if (subtitle) subtitle.innerText = notFoundEn.title;
+      document.documentElement.lang = isEnglish ? 'en' : 'fr';
+      document.title = content.title;
+      const subtitle = document.getElementById('error-subtitle');
+      if (subtitle) subtitle.innerText = content.title;
 
-        const desc = document.getElementById('error-desc');
-        if (desc) desc.innerText = notFoundEn.description;
+      const desc = document.getElementById('error-desc');
+      if (desc) desc.innerText = content.description;
 
-        const btn = document.getElementById('error-btn');
-        if (btn) {
-          btn.innerText = notFoundEn.btn;
-          btn.href = '/en';
-        }
+      const btn = document.getElementById('error-btn');
+      if (btn) {
+        btn.innerText = content.btn;
+        btn.href = isEnglish ? '/en' : '/';
+      }
+      for (const [id, value] of Object.entries({
+        'footer-subtitle': contact.subtitle,
+        'footer-desc': contact.desc,
+        'footer-address': contact.address,
+        'footer-email': contact.email,
+        'footer-phone': contact.phone,
+      })) {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
       }
     }
 

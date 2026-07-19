@@ -2,15 +2,14 @@ import type { SiteData } from '../../types/site';
 
 export const fr: SiteData = {
   meta: {
-    title: 'Julien Chapuy - Ingénieur en intelligence artificiellle',
+    title: 'Julien Chapuy - Ingénieur en intelligence artificielle',
     description:
-      'AI Engineer specializing in LLMs, RAG Architectures, and Scalable Backend Systems.',
+      'Ingénieur IA spécialisé en LLM, architectures RAG et systèmes backend scalables.',
   },
   nav: {
     brand: 'Julien Chapuy',
     home: 'Accueil',
     about: 'À propos',
-    services: 'Expertise',
     work: 'Projets',
     blog: 'Blog',
     resume: 'CV',
@@ -176,7 +175,6 @@ export const fr: SiteData = {
     experience: 'Expérience',
     education: 'Formation',
     skills: 'Compétences',
-    download: 'Télécharger PDF',
   },
   about: {
     title: 'À propos',
@@ -205,27 +203,6 @@ export const fr: SiteData = {
       "Mon expertise couvre la conception d'architectures RAG, l'optimisation des LLMs et le développement d'applications full-stack scalables.",
     ],
   },
-  services: {
-    title: 'Expertise',
-    subtitle: "Focus sur la delivery technique et l'innovation pragmatique.",
-    items: [
-      {
-        icon: 'ion-code-working',
-        title: 'Large Language Models',
-        desc: "Conception d'architectures RAG, optimisation des prompts et fine-tuning. Focus sur la précision des outputs et la réduction des hallucinations.",
-      },
-      {
-        icon: 'ion-ios-gear',
-        title: 'Software Engineering',
-        desc: 'Développement full-stack robuste (TypeScript, React, Python). Architecture micro-services et APIs scalables conçues pour la production.',
-      },
-      {
-        icon: 'ion-stats-bars',
-        title: 'Technical Excellence',
-        desc: "Benchmarking de performance, optimisation des coûts d'inférence et mise en place de pipelines CI/CD automatisés.",
-      },
-    ],
-  },
   stats: {
     experience: "Années d'Expérience",
     projects: 'Projets IA Majeurs',
@@ -236,6 +213,7 @@ export const fr: SiteData = {
     title: 'Projets',
     subtitle:
       'Sélection de travaux en intelligence artificielle et développement web.',
+    empty: 'Aucun projet publié pour le moment.',
     seeMore: 'Voir plus de projets',
     items: [],
   },

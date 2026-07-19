@@ -17,20 +17,22 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
       <div className="container">
         <div className={styles['footer-content']}>
           <div className={styles['footer-info']}>
-            <h3>{content.subtitle}</h3>
-            <p>{content.desc}</p>
+            <h3 id="footer-subtitle">{content.subtitle}</h3>
+            <p id="footer-desc">{content.desc}</p>
 
             <ul className={styles['footer-links']}>
               <li>
-                <span className="ion-ios-location"></span> {content.address}
+                <span className="ion-ios-location"></span>{' '}
+                <span id="footer-address">{content.address}</span>
               </li>
               <li>
-                <span className="ion-email"></span> {content.email}
+                <span className="ion-email"></span>{' '}
+                <span id="footer-email">{content.email}</span>
               </li>
               <li>
                 <span className="ion-social-linkedin"></span>
                 <a href="https://linkedin.com/in/julien-chapuy/">
-                  {content.phone}
+                  <span id="footer-phone">{content.phone}</span>
                 </a>
               </li>
             </ul>

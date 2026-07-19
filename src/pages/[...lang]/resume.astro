@@ -12,11 +12,12 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.props;
 const data = siteData[lang as 'fr' | 'en'];
-const { nav, resumePage, intro, about, experience, education } = data;
+const { resumePage, intro, about, experience, education } = data;
 ---
 
 <Layout
   title={`${resumePage.title} | ${data.meta.title}`}
+  description={data.meta.description}
   lang={lang as 'fr' | 'en'}
 >
   <div class="resume-container route" style="margin-top: 80px;">
@@ -102,16 +103,6 @@ const { nav, resumePage, intro, about, experience, education } = data;
             <h2 class="section-title">{resumePage.skills}</h2>
             <Stack client:visible stack={intro.stack} />
           </section>
-
-          <div class="text-center mt-5 mb-5 no-print">
-            <a
-              href="/docs/cv_francais.pdf"
-              class="btn btn-primary d-inline-flex align-items-center gap-2"
-            >
-              <i class="fa fa-download"></i>
-              {resumePage.download}
-            </a>
-          </div>
         </div>
       </div>
     </div>

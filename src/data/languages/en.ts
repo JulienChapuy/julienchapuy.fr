@@ -10,7 +10,6 @@ export const en: SiteData = {
     brand: 'Julien Chapuy',
     home: 'Home',
     about: 'About',
-    services: 'Expertise',
     work: 'Projects',
     blog: 'Blog',
     resume: 'Resume',
@@ -175,7 +174,6 @@ export const en: SiteData = {
     experience: 'Experience',
     education: 'Education',
     skills: 'Skills',
-    download: 'Download PDF',
   },
   about: {
     title: 'About Me',
@@ -204,27 +202,6 @@ export const en: SiteData = {
       'My expertise covers RAG architecture design, LLM optimization, and the development of scalable full-stack applications.',
     ],
   },
-  services: {
-    title: 'Expertise',
-    subtitle: 'Focus on technical delivery and pragmatic innovation.',
-    items: [
-      {
-        icon: 'ion-code-working',
-        title: 'Large Language Models',
-        desc: 'Designing RAG architectures, prompt optimization, and fine-tuning. Strong focus on output accuracy and hallucination reduction.',
-      },
-      {
-        icon: 'ion-ios-gear',
-        title: 'Software Engineering',
-        desc: 'Robust full-stack development (TypeScript, React, Python). Micro-services architecture and scalable APIs built for production environments.',
-      },
-      {
-        icon: 'ion-stats-bars',
-        title: 'Technical Excellence',
-        desc: 'Performance benchmarking, inference cost optimization, and implementing automated CI/CD pipelines.',
-      },
-    ],
-  },
   stats: {
     experience: 'Years of Experience',
     projects: 'Core AI Projects',
@@ -235,6 +212,7 @@ export const en: SiteData = {
     title: 'Projects',
     subtitle:
       'A selection of my work in Artificial Intelligence and Software Engineering.',
+    empty: 'No projects published yet.',
     seeMore: 'See more projects',
     items: [],
   },
@@ -245,7 +223,7 @@ export const en: SiteData = {
       {
         category: 'Technical Leadership',
         title: 'LLM Benchmark & Optimization',
-        link: 'blog/benchmark',
+        link: '/en/blog/benchmark',
         desc: 'LLM cost analysis, RAG architectures, and AI system security.',
       },
     ],
