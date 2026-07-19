@@ -27,9 +27,13 @@ const About: React.FC<AboutProps> = ({ content }) => {
                   <div className={styles['about-profile']}>
                     <div className={styles['about-img']}>
                       <img
-                        src="/assets/img/photo.jpg"
+                        src={content.profileImage}
                         className="img-fluid rounded-circle"
                         alt="Profile"
+                        width={1600}
+                        height={1067}
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
                     <div className={styles['about-info']}>

@@ -1,8 +1,5 @@
 import React from 'react';
-import * as ReactCountUpModule from 'react-countup';
-
-// Handle CJS/ESM interop
-const CountUp = (ReactCountUpModule as any).default || ReactCountUpModule;
+import CountUp from 'react-countup';
 
 import styles from './Stats.module.scss';
 

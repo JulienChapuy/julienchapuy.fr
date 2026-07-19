@@ -54,7 +54,7 @@
     justify-content: center;
 
     @media (max-width: 768px) {
-      display: none; // We might need a mobile menu later if there are too many links
+      display: none;
     }
   }
 
@@ -126,7 +126,6 @@
   }
 }
 
-// Add a mobile specific layout if needed
 @media (max-width: 768px) {
   .navbar {
     padding: 0.5rem 1rem;
@@ -135,7 +134,6 @@
     .nav-right {
       gap: 0.5rem;
 
-      // Hide the desktop 'Contact' button on mobile to save space
       .btn-contact {
         display: none;
       }
@@ -234,7 +232,6 @@
       opacity: 1;
       transform: translateY(0);
 
-      // Stagger animation
       @for $i from 1 through 6 {
         &:nth-child(#{$i}) {
           transition-delay: #{$i * 0.1}s;

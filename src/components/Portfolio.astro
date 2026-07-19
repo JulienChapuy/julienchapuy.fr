@@ -11,4 +11,4 @@ const { lang, limit } = Astro.props;
 const content = siteData[lang].portfolio;
 ---
 
-<PortfolioReact content={content} limit={limit} lang={lang} client:load />
+<PortfolioReact content={content} limit={limit} lang={lang} />

@@ -7,7 +7,6 @@ export interface NavLabels {
   brand: string;
   home: string;
   about: string;
-  services: string;
   work: string;
   blog: string;
   resume: string;
@@ -60,7 +59,6 @@ export interface ResumePageLabels {
   experience: string;
   education: string;
   skills: string;
-  download: string;
 }
 
 export interface StackItem {
@@ -88,18 +86,6 @@ export interface AboutContent {
   aboutMe: string[];
 }
 
-export interface ServiceItem {
-  icon: string;
-  title: string;
-  desc: string;
-}
-
-export interface ServicesContent {
-  title: string;
-  subtitle: string;
-  items: ServiceItem[];
-}
-
 export interface StatsContent {
   experience: string;
   projects: string;
@@ -118,6 +104,7 @@ export interface PortfolioItem {
 export interface PortfolioContent {
   title: string;
   subtitle: string;
+  empty?: string;
   seeMore: string;
   items: PortfolioItem[];
 }
@@ -173,7 +160,6 @@ export interface SiteData {
   education: EducationContent;
   resumePage: ResumePageLabels;
   about: AboutContent;
-  services: ServicesContent;
   stats: StatsContent;
   portfolio: PortfolioContent;
   insights: InsightsContent;

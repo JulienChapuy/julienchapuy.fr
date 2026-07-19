@@ -7,7 +7,6 @@ interface LogoLoopProps {
 }
 
 const LogoLoop: React.FC<LogoLoopProps> = ({ stack }) => {
-  // 1. Flatten the stack if it has categories
   let allItems: StackItem[] = [];
   if (Array.isArray(stack) && stack.length > 0 && 'category' in stack[0]) {
     (stack as StackCategory[]).forEach((cat) => {
@@ -17,8 +16,6 @@ const LogoLoop: React.FC<LogoLoopProps> = ({ stack }) => {
     allItems = stack as StackItem[];
   }
 
-  // 2. Duplicate items to ensure seamless loop
-  // We need enough width to scroll. If we have a lot of items, double is enough.
   const loopItems = [...allItems, ...allItems];
 
   return (
