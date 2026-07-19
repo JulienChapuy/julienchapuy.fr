@@ -19,9 +19,13 @@ const content = data.insights;
 const title = `${data.insights.title} | ${data.meta.title}`;
 ---
 
-<Layout title={title} lang={lang as 'fr' | 'en'}>
+<Layout
+  title={title}
+  description={data.meta.description}
+  lang={lang as 'fr' | 'en'}
+>
   <div style="padding-top: 100px;">
-    <BlogReact content={content} isDedicatedPage={true} client:load />
+    <BlogReact content={content} isDedicatedPage={true} />
     <Footer lang={lang as 'fr' | 'en'} />
   </div>
 </Layout>

@@ -20,9 +20,13 @@ const title =
   lang === 'fr' ? 'Projets - Julien Chapuy' : 'Projects - Julien Chapuy';
 ---
 
-<Layout title={title} lang={lang as 'fr' | 'en'}>
+<Layout
+  title={title}
+  description={data.meta.description}
+  lang={lang as 'fr' | 'en'}
+>
   <div style="padding-top: 80px;">
-    <PortfolioReact content={content} lang={lang as 'fr' | 'en'} client:load />
+    <PortfolioReact content={content} lang={lang as 'fr' | 'en'} />
     <Footer lang={lang as 'fr' | 'en'} />
   </div>
 </Layout>

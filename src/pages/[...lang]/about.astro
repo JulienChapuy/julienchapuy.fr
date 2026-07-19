@@ -2,7 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 
 import AboutReact from '../../components/About/About';
-import StackReact from '../../components/Stack/Stack';
 import StatsReact from '../../components/Stats/Stats';
 import Footer from '../../components/Footer.astro';
 import { siteData } from '../../data/copy';
@@ -23,9 +22,13 @@ const title =
   lang === 'fr' ? 'À Propos - Julien Chapuy' : 'About - Julien Chapuy';
 ---
 
-<Layout title={title} lang={lang as 'fr' | 'en'}>
+<Layout
+  title={title}
+  description={data.meta.description}
+  lang={lang as 'fr' | 'en'}
+>
   <div style="padding-top: 80px;">
-    <AboutReact content={aboutContent} client:load />
+    <AboutReact content={aboutContent} />
     <StatsReact content={statsContent} client:only="react" />
     <Footer lang={lang as 'fr' | 'en'} />
   </div>
