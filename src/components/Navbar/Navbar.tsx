@@ -12,7 +12,6 @@ interface NavbarProps {
       brand: string;
       home: string;
       about: string;
-      work: string;
       blog: string;
       resume: string;
       contact: string;
@@ -21,7 +20,6 @@ interface NavbarProps {
       brand: string;
       home: string;
       about: string;
-      work: string;
       blog: string;
       resume: string;
       contact: string;
@@ -93,7 +91,6 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const homeLink = lang === 'fr' ? '/' : '/en';
   const aboutLink = `${basePath}/about`;
-  const projectsLink = `${basePath}/projects`;
   const blogLink = `${basePath}/blog`;
   const resumeLink = `${basePath}/resume`;
 
@@ -135,14 +132,6 @@ const Navbar: React.FC<NavbarProps> = ({
                   href={aboutLink}
                 >
                   {labels.about}
-                </a>
-              </li>
-              <li>
-                <a
-                  className={`${isActive('projects') ? styles.active : ''}`}
-                  href={projectsLink}
-                >
-                  {labels.work}
                 </a>
               </li>
               <li>
@@ -214,15 +203,6 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {labels.about}
-              </a>
-            </li>
-            <li>
-              <a
-                className={`${isActive('projects') ? styles.active : ''}`}
-                href={projectsLink}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {labels.work}
               </a>
             </li>
             <li>

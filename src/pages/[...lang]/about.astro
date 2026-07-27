@@ -2,7 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 
 import AboutReact from '../../components/About/About';
-import StatsReact from '../../components/Stats/Stats';
 import Footer from '../../components/Footer.astro';
 import { siteData } from '../../data/copy';
 
@@ -16,20 +15,16 @@ export async function getStaticPaths() {
 const { lang } = Astro.props;
 const data = siteData[lang as 'fr' | 'en'];
 const aboutContent = data.about;
-const statsContent = data.stats;
-
-const title =
-  lang === 'fr' ? 'À Propos - Julien Chapuy' : 'About - Julien Chapuy';
+const page = data.pages.about;
 ---
 
 <Layout
-  title={title}
-  description={data.meta.description}
+  title={page.title}
+  description={page.description}
   lang={lang as 'fr' | 'en'}
 >
-  <div style="padding-top: 80px;">
+  <div style="padding-top: 5rem;">
     <AboutReact content={aboutContent} />
-    <StatsReact content={statsContent} client:only="react" />
     <Footer lang={lang as 'fr' | 'en'} />
   </div>
 </Layout>

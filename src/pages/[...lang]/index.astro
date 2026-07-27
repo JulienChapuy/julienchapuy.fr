@@ -3,7 +3,6 @@ import Layout from '../../layouts/Layout.astro';
 
 import Intro from '../../components/Intro/Intro';
 
-import Portfolio from '../../components/Portfolio.astro';
 import Blog from '../../components/Blog.astro';
 import Footer from '../../components/Footer.astro';
 import Experience from '../../components/Experience/Experience';
@@ -42,14 +41,7 @@ const data = siteData[lang as 'fr' | 'en'];
     </div>
 
     <div class="container">
-      <div class="row section-grid">
-        <div class="col-md-6">
-          <Portfolio lang={lang as 'fr' | 'en'} limit={3} />
-        </div>
-        <div class="col-md-6">
-          <Blog lang={lang as 'fr' | 'en'} limit={3} />
-        </div>
-      </div>
+      <Blog lang={lang as 'fr' | 'en'} limit={3} />
     </div>
 
     <Footer lang={lang as 'fr' | 'en'} />

@@ -23,7 +23,6 @@
     "devicon": "^2.17.0",
     "framer-motion": "^12.42.2",
     "react": "^19.2.7",
-    "react-countup": "^6.5.3",
     "react-dom": "^19.2.7",
     "sass": "^1.101.0"
   },
