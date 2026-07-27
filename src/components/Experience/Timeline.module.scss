@@ -18,11 +18,9 @@
 
   &.is-active {
     .timeline-bullet {
-      background-color: #86efac; // bg-green-300
-      border-color: #86efac;
+      background-color: var(--primary);
+      border-color: var(--primary);
     }
-
-    // border-left-color: var(--primary); // Optional: if we want the bar to be colored too
   }
 
   .timeline-bullet {

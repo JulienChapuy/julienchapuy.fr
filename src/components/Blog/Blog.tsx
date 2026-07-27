@@ -39,12 +39,7 @@ const Blog: React.FC<BlogProps> = ({
             <div
               className={`title-box text-center ${isDedicatedPage ? 'mb-5' : ''}`}
             >
-              <h3
-                className="title-a"
-                style={{ fontWeight: 800, letterSpacing: '-0.02em' }}
-              >
-                {content.title}
-              </h3>
+              <h3 className="title-a">{content.title}</h3>
               <p className="subtitle-a">{content.subtitle}</p>
               <div className="line-mf" style={{ marginTop: '1rem' }}></div>
             </div>
@@ -78,15 +73,10 @@ const Blog: React.FC<BlogProps> = ({
               href={seeMoreLink}
               className="btn btn-primary btn-lg"
               style={{
-                background: 'var(--primary)',
-                border: 'none',
                 padding: '0.8rem 2rem',
                 borderRadius: '50px',
                 fontSize: '1rem',
                 fontWeight: 600,
-                color: 'white',
-                textDecoration: 'none',
-                transition: 'opacity 0.2s',
               }}
             >
               {lang === 'fr' ? "Voir plus d'articles" : 'See more posts'}

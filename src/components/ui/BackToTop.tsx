@@ -60,7 +60,11 @@ const BackToTop: React.FC = () => {
         >
           <i
             className="fa fa-chevron-up"
-            style={{ color: '#fff', fontSize: '24px', lineHeight: 0 }}
+            style={{
+              color: 'var(--on-primary)',
+              fontSize: '24px',
+              lineHeight: 0,
+            }}
           ></i>
         </motion.button>
       )}

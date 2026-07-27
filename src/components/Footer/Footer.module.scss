@@ -3,6 +3,9 @@
   border-top: 1px solid var(--border);
   padding: 5rem 0 2rem;
   margin-top: 5rem;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 
   .footer-content {
     display: flex;
@@ -10,6 +13,7 @@
     align-items: flex-start;
     gap: 4rem;
     margin-bottom: 4rem;
+    min-width: 0;
 
     @media (max-width: 768px) {
       flex-direction: column;
@@ -88,7 +92,7 @@
       &:hover {
         background: var(--primary);
         border-color: var(--primary);
-        color: white;
+        color: var(--on-primary);
         transform: translateY(-3px);
       }
     }

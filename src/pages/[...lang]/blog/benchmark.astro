@@ -120,7 +120,7 @@ const page = data.pages.benchmark;
     align-items: center;
     gap: 0.5rem;
     background: var(--primary);
-    color: var(--bg);
+    color: var(--on-primary);
     padding: 0.8rem 2rem;
     border-radius: 30px;
     text-decoration: none;
@@ -132,6 +132,6 @@ const page = data.pages.benchmark;
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
   }
 </style>
