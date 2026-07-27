@@ -7,7 +7,6 @@ export interface NavLabels {
   brand: string;
   home: string;
   about: string;
-  work: string;
   blog: string;
   resume: string;
   contact: string;
@@ -19,6 +18,7 @@ export interface IntroContent {
   roles: string;
   subRoles?: string;
   btn: string;
+  ctaHref: string;
   stack: StackCategory[];
 }
 
@@ -31,7 +31,7 @@ export interface Role {
 
 export interface Job {
   company: string;
-  url: string;
+  url?: string;
   roles: Role[];
 }
 
@@ -55,7 +55,6 @@ export interface EducationContent {
 
 export interface ResumePageLabels {
   title: string;
-  summary: string;
   experience: string;
   education: string;
   skills: string;
@@ -84,29 +83,6 @@ export interface AboutContent {
   description: string;
   socials: SocialLink[];
   aboutMe: string[];
-}
-
-export interface StatsContent {
-  experience: string;
-  projects: string;
-  articles: string;
-  papers: string;
-}
-
-export interface PortfolioItem {
-  link: string;
-  img: string;
-  title: string;
-  category: string;
-  tech: string;
-}
-
-export interface PortfolioContent {
-  title: string;
-  subtitle: string;
-  empty?: string;
-  seeMore: string;
-  items: PortfolioItem[];
 }
 
 export interface InsightItem {
@@ -142,8 +118,20 @@ export interface BenchmarkArticle {
   title: string;
   subtitle: string;
   content: string[];
-  galadrimLinkText: string;
-  galadrimLink: string;
+  externalLinkText: string;
+  externalLink: string;
+}
+
+export interface PageMetadata {
+  title: string;
+  description: string;
+}
+
+export interface PageMetadataContent {
+  about: PageMetadata;
+  resume: PageMetadata;
+  blog: PageMetadata;
+  benchmark: PageMetadata;
 }
 
 export interface NotFoundContent {
@@ -160,10 +148,9 @@ export interface SiteData {
   education: EducationContent;
   resumePage: ResumePageLabels;
   about: AboutContent;
-  stats: StatsContent;
-  portfolio: PortfolioContent;
   insights: InsightsContent;
   contact: ContactContent;
   benchmarkArticle: BenchmarkArticle;
+  pages: PageMetadataContent;
   notFound: NotFoundContent;
 }

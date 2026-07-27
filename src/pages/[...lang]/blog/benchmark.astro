@@ -14,12 +14,12 @@ const { lang } = Astro.props;
 const data = siteData[lang as 'fr' | 'en'];
 const article = data.benchmarkArticle;
 
-const title = `${article.title} | ${data.meta.title}`;
+const page = data.pages.benchmark;
 ---
 
 <Layout
-  title={title}
-  description={data.meta.description}
+  title={page.title}
+  description={page.description}
   lang={lang as 'fr' | 'en'}
 >
   <div style="padding-top: 100px;">
@@ -42,12 +42,12 @@ const title = `${article.title} | ${data.meta.title}`;
 
         <div class="cta-container">
           <a
-            href={article.galadrimLink}
+            href={article.externalLink}
             target="_blank"
             rel="noopener noreferrer"
             class="btn btn-primary"
           >
-            {article.galadrimLinkText} &rarr;
+            {article.externalLinkText} &rarr;
           </a>
         </div>
       </div>

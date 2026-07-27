@@ -11,6 +11,7 @@ interface IntroProps {
     roles: string;
     subRoles?: string;
     btn: string;
+    ctaHref: string;
   };
   stack: StackCategory[];
 }
@@ -30,7 +31,7 @@ const Intro: React.FC<IntroProps> = ({ content, stack }) => {
         <h2 className={styles['intro-role']}>{content.roles}</h2>
         <p className={styles['intro-subtitle']}>{content.subRoles}</p>
         <div>
-          <a href="#work" className={styles['btn-intro']}>
+          <a href={content.ctaHref} className={styles['btn-intro']}>
             {content.btn}
           </a>
         </div>

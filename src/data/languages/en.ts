@@ -2,25 +2,24 @@ import type { SiteData } from '../../types/site';
 
 export const en: SiteData = {
   meta: {
-    title: 'Julien Chapuy - AI Engineer',
+    title: 'Julien Chapuy — Freelance AI Engineer',
     description:
-      'AI Engineer specializing in LLMs, RAG Architectures, and Scalable Backend Systems.',
+      'Freelance AI engineer in Osaka, Japan, working on RAG, document processing and cloud infrastructure.',
   },
   nav: {
     brand: 'Julien Chapuy',
     home: 'Home',
     about: 'About',
-    work: 'Projects',
     blog: 'Blog',
     resume: 'Resume',
     contact: 'Contact',
   },
   intro: {
-    greeting: 'Software Engineer @ Galadrim',
+    greeting: 'Freelance AI Engineer',
     name: 'Julien Chapuy',
-    roles:
-      'AI Engineer specializing in LLMs, RAG Architectures, and Scalable Backend Systems.',
-    btn: 'Read Bio',
+    roles: 'RAG, document processing and cloud infrastructure.',
+    btn: 'Get in touch',
+    ctaHref: 'mailto:pro@julienchapuy.fr',
     stack: [
       {
         category: 'Languages',
@@ -60,25 +59,44 @@ export const en: SiteData = {
     seeMore: 'See full resume',
     jobs: [
       {
+        company: 'Freelance',
+        roles: [
+          {
+            role: 'Freelance AI Engineer',
+            period: 'May 2026 - Present',
+            desc: [
+              'Building retrieval and document-processing pipelines.',
+              'Integrating language models into existing products and internal tools.',
+              'Setting up evaluation, monitoring and deployment workflows.',
+              'Reviewing application and cloud architecture.',
+              'Implementing backend, frontend and infrastructure components when needed.',
+            ],
+          },
+        ],
+      },
+      {
         company: 'Galadrim',
         url: 'https://www.galadrim.fr',
         roles: [
           {
             role: 'Lead AI Engineer',
-            period: 'June 2025 - Present',
+            period: 'June 2025 - May 2026',
             desc: [
-              'Architected and deployed a highly scalable scrapping infrastructure utilizing AWS ECS, Celery, and RabbitMQ, overseeing DevOps and cloud infrastructure for a team of 5-10 engineers.',
-              'Provided technical leadership and mentorship to two AI engineers on projects including document extraction and analysis, RAG chatbot development, and AI-augmented data cleaning processes.',
-              'Played a key role in talent acquisition by conducting over 20 technical interviews for AI engineering positions.',
-              'Contributed to multiple technical audits and supported pre-sales activities by providing technical expertise.',
+              'Led technical delivery across document processing, RAG and AI-assisted data workflows.',
+              'Mentored AI engineers through architecture reviews, implementation support and code reviews.',
+              'Owned AWS and deployment architecture supporting projects delivered by a team of 5–10 engineers.',
+              'Contributed to technical audits, pre-sales work and recruitment, including more than 20 technical interviews.',
+              'Designed and delivered internal training on AWS, Terraform and content-delivery infrastructure.',
             ],
           },
           {
             role: 'AI Software Engineer',
             period: 'June 2024 - June 2025',
             desc: [
-              'Engineered a comprehensive full-stack solution, including a Rust backend, a React-based backoffice, and a React Native mobile application featuring AI-powered artwork retrieval via image recognition.',
-              'Developed and delivered internal training programs on key technologies including AWS, Terraform, and Content Delivery Networks (CDNs).',
+              'Built a distributed data-collection platform on AWS ECS using Celery and RabbitMQ.',
+              'Developed an artwork-recognition product with a Rust backend, React back office and React Native mobile application.',
+              'Worked on document extraction, RAG applications and AI-assisted data-cleaning systems.',
+              'Managed infrastructure as code and deployment workflows using AWS and Terraform.',
             ],
           },
         ],
@@ -170,7 +188,6 @@ export const en: SiteData = {
   },
   resumePage: {
     title: 'Resume',
-    summary: 'Summary',
     experience: 'Experience',
     education: 'Education',
     skills: 'Skills',
@@ -178,7 +195,7 @@ export const en: SiteData = {
   about: {
     title: 'About Me',
     profileImage: '/assets/img/photo.jpg',
-    description: 'AI Engineer @ Galadrim',
+    description: 'Freelance AI Engineer based in Osaka, Japan.',
     socials: [
       {
         name: 'LinkedIn',
@@ -192,67 +209,77 @@ export const en: SiteData = {
       },
       {
         name: 'Email',
-        url: 'mailto:contact@julienchapuy.fr',
+        url: 'mailto:pro@julienchapuy.fr',
         icon: 'ion-ios-email',
       },
     ],
     aboutMe: [
-      'A graduate of <strong>École Centrale de Lille</strong>, I specialize in the intersection of software engineering and artificial intelligence.',
-      'Passionate about innovation, I help companies leverage Generative AI to turn complex ideas into robust, high-performance solutions.',
-      'My expertise covers RAG architecture design, LLM optimization, and the development of scalable full-stack applications.',
+      'AI engineer based in Japan, with experience building and operating production AI systems.',
+      'My work covers AI application architecture, backend implementation, asynchronous processing, infrastructure as code and deployment workflows.',
+      'I work with teams developing RAG systems, document-processing pipelines and LLM-enabled applications.',
     ],
-  },
-  stats: {
-    experience: 'Years of Experience',
-    projects: 'Core AI Projects',
-    articles: 'Technical Posts',
-    papers: 'Papers',
-  },
-  portfolio: {
-    title: 'Projects',
-    subtitle:
-      'A selection of my work in Artificial Intelligence and Software Engineering.',
-    empty: 'No projects published yet.',
-    seeMore: 'See more projects',
-    items: [],
   },
   insights: {
     title: 'Blog',
-    subtitle: 'Technical documentation, blog posts, and academic archives.',
+    subtitle:
+      'Practical notes on RAG, LLM evaluation and production AI systems.',
     items: [
       {
-        category: 'Technical Leadership',
-        title: 'LLM Benchmark & Optimization',
+        category: 'Backend benchmark',
+        title: 'Which language for a high-performance backend in 2026?',
         link: '/en/blog/benchmark',
-        desc: 'LLM cost analysis, RAG architectures, and AI system security.',
+        desc: 'A practical account of benchmarking backends with Grafana K6.',
       },
     ],
   },
   benchmarkArticle: {
-    title: 'LLM Benchmark & Optimization',
-    subtitle:
-      'In-depth analysis of LLM cost/performance trade-offs for production RAG systems.',
+    title: 'Which language for a high-performance backend in 2026?',
+    subtitle: 'Benchmarking with Grafana K6.',
     content: [
-      'At Galadrim, I led a comprehensive study on the performance of various market LLMs (OpenAI, Anthropic, Mistral, Llama).',
-      'The goal was to define cost/performance benchmarks to guide our RAG architecture choices.',
-      'I developed an automated testing protocol measuring latency (TTFT, TPS) and response quality on specific tasks (summarization, extraction, classification).',
+      'In this article published by Galadrim, I compared backend implementations in Go, Rust, Python and JavaScript for a representative REST API.',
+      'The protocol uses Grafana K6 to simulate a user journey through a small social network, with loads from 50 to 1,000 concurrent virtual users.',
+      'The article presents the methodology, the benchmark limitations and the trade-offs between raw performance, development speed and architectural constraints.',
     ],
-    galadrimLinkText: "Read the full article on Galadrim's blog",
-    galadrimLink: 'https://www.galadrim.fr/blog',
+    externalLinkText: 'Read the full article on Galadrim’s blog',
+    externalLink:
+      'https://galadrim.fr/blog/quel-langage-pour-un-backend-performant-en-2026/',
   },
   contact: {
     send: 'Get in touch',
     subtitle: "Let's build something together",
-    desc: 'Have an AI project, need technical expertise, or just want to chat about the future of tech? Feel free to reach out.',
-    address: 'Paris, France / Remote',
+    desc: 'Have an AI project involving RAG, document processing or cloud infrastructure? Feel free to get in touch.',
+    address: 'Osaka, Japan · Remote',
     phone: 'linkedin.com/in/julien-chapuy',
-    email: 'contact@julienchapuy.fr',
+    email: 'pro@julienchapuy.fr',
     form: {
       name: 'Your Name',
-      email: 'Your Email',
+      email: 'Your Email (optional)',
       subject: 'Subject',
       message: 'Message',
       btn: 'Send Message',
+    },
+  },
+  pages: {
+    about: {
+      title: 'About | Julien Chapuy',
+      description:
+        'Background in AI engineering, technical delivery and production systems.',
+    },
+    resume: {
+      title: 'Resume | Julien Chapuy',
+      description:
+        'AI-engineering background spanning technical delivery and production systems.',
+    },
+    blog: {
+      title: 'Blog | Julien Chapuy',
+      description:
+        'Practical writing on RAG, LLM evaluation and production AI systems.',
+    },
+    benchmark: {
+      title:
+        'Which Language for a High-Performance Backend in 2026? | Julien Chapuy',
+      description:
+        'A practical account of benchmarking backends with Grafana K6.',
     },
   },
   notFound: {

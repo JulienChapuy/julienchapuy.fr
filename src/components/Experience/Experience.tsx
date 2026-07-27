@@ -12,7 +12,7 @@ interface Role {
 
 interface Job {
   company: string;
-  url: string;
+  url?: string;
   roles: Role[];
 }
 
@@ -98,14 +98,18 @@ const Experience: React.FC<ExperienceProps> = ({
             >
               <div className={styles['company-header']}>
                 <h3>
-                  <a
-                    href={displayedJobs[activeTab].url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles['company-link']}
-                  >
-                    {displayedJobs[activeTab].company}
-                  </a>
+                  {displayedJobs[activeTab].url ? (
+                    <a
+                      href={displayedJobs[activeTab].url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles['company-link']}
+                    >
+                      {displayedJobs[activeTab].company}
+                    </a>
+                  ) : (
+                    displayedJobs[activeTab].company
+                  )}
                 </h3>
               </div>
 

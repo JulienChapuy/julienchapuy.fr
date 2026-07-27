@@ -2,26 +2,24 @@ import type { SiteData } from '../../types/site';
 
 export const fr: SiteData = {
   meta: {
-    title: 'Julien Chapuy - Ingénieur en intelligence artificielle',
+    title: 'Julien Chapuy — Ingénieur IA freelance',
     description:
-      'Ingénieur IA spécialisé en LLM, architectures RAG et systèmes backend scalables.',
+      'Ingénieur IA freelance à Osaka, au Japon, spécialisé en RAG, traitement documentaire et infrastructure cloud.',
   },
   nav: {
     brand: 'Julien Chapuy',
     home: 'Accueil',
     about: 'À propos',
-    work: 'Projets',
     blog: 'Blog',
     resume: 'CV',
     contact: 'Contact',
   },
   intro: {
-    greeting: 'Bonjour, je suis',
+    greeting: 'Ingénieur IA freelance',
     name: 'Julien Chapuy',
-    roles: 'AI Engineer @ Galadrim.',
-    subRoles:
-      'Je construis des expériences digitales accessibles et pixel-perfect.',
-    btn: 'Découvrir mes projets',
+    roles: 'RAG, traitement documentaire et infrastructure cloud.',
+    btn: 'Me contacter',
+    ctaHref: 'mailto:pro@julienchapuy.fr',
     stack: [
       {
         category: 'Langages',
@@ -61,25 +59,44 @@ export const fr: SiteData = {
     seeMore: 'Voir le CV complet',
     jobs: [
       {
+        company: 'Indépendant',
+        roles: [
+          {
+            role: 'Ingénieur IA freelance',
+            period: 'Mai 2026 - Présent',
+            desc: [
+              'Conception de pipelines de recherche et de traitement documentaire.',
+              'Intégration de modèles de langage dans des produits existants et des outils internes.',
+              'Mise en place de workflows d’évaluation, de monitoring et de déploiement.',
+              'Revue de l’architecture applicative et cloud.',
+              'Implémentation de composants backend, frontend et infrastructure selon les besoins.',
+            ],
+          },
+        ],
+      },
+      {
         company: 'Galadrim',
         url: 'https://www.galadrim.fr',
         roles: [
           {
             role: 'Lead AI Engineer',
-            period: 'Juin 2025 - Présent',
+            period: 'Juin 2025 - Mai 2026',
             desc: [
-              "Architecture et déploiement d'une infrastructure de scraping hautement scalable utilisant AWS ECS, Celery et RabbitMQ, avec supervision DevOps pour une équipe de 5-10 ingénieurs.",
-              "Leadership technique et mentorat de deux ingénieurs IA sur des projets d'extraction de documents, chatbots RAG et nettoyage de données assisté par IA.",
-              "Rôle clé dans le recrutement, menant plus de 20 entretiens techniques pour des postes d'ingénieurs IA.",
-              'Contribution à de multiples audits techniques et support avant-vente via une expertise technique.',
+              'Pilotage de la réalisation technique sur des workflows de traitement documentaire, RAG et de données assistées par IA.',
+              'Accompagnement d’ingénieurs IA via des revues d’architecture, du support à l’implémentation et des revues de code.',
+              'Responsabilité de l’architecture AWS et du déploiement de projets réalisés par une équipe de 5 à 10 ingénieurs.',
+              'Contribution à des audits techniques, à l’avant-vente et au recrutement, avec plus de 20 entretiens techniques.',
+              'Conception et animation de formations internes sur AWS, Terraform et l’infrastructure de diffusion de contenu.',
             ],
           },
           {
             role: 'AI Software Engineer',
             period: 'Juin 2024 - Juin 2025',
             desc: [
-              "Conception d'une solution full-stack complète incluant un backend Rust, un backoffice React et une application mobile React Native avec recherche d'œuvres d'art par reconnaissance d'image.",
-              'Développement et animation de formations internes sur des technologies clés incluant AWS, Terraform et les CDNs.',
+              'Conception d’une plateforme distribuée de collecte de données sur AWS ECS avec Celery et RabbitMQ.',
+              'Développement d’un produit de reconnaissance d’œuvres d’art avec backend Rust, back office React et application mobile React Native.',
+              'Travail sur l’extraction de documents, des applications RAG et des systèmes de nettoyage de données assistés par IA.',
+              'Gestion de l’infrastructure as code et des workflows de déploiement avec AWS et Terraform.',
             ],
           },
         ],
@@ -171,7 +188,6 @@ export const fr: SiteData = {
   },
   resumePage: {
     title: 'CV',
-    summary: 'Résumé',
     experience: 'Expérience',
     education: 'Formation',
     skills: 'Compétences',
@@ -179,7 +195,7 @@ export const fr: SiteData = {
   about: {
     title: 'À propos',
     profileImage: '/assets/img/photo.jpg',
-    description: 'AI Engineer @ Galadrim',
+    description: 'Ingénieur IA freelance basé à Osaka, au Japon.',
     socials: [
       {
         name: 'LinkedIn',
@@ -193,68 +209,77 @@ export const fr: SiteData = {
       },
       {
         name: 'Email',
-        url: 'mailto:contact@julienchapuy.fr',
+        url: 'mailto:pro@julienchapuy.fr',
         icon: 'ion-ios-email',
       },
     ],
     aboutMe: [
-      "Ingénieur diplômé de l'<strong>École Centrale de Lille</strong>, je me spécialise dans la convergence du génie logiciel et de l'intelligence artificielle.",
-      "Passionné par l'innovation, j'accompagne les entreprises dans l'intégration de l'IA Générative pour transformer des idées complexes en solutions robustes et performantes.",
-      "Mon expertise couvre la conception d'architectures RAG, l'optimisation des LLMs et le développement d'applications full-stack scalables.",
+      'Ingénieur IA basé au Japon, avec une expérience dans la conception et l’exploitation de systèmes d’IA en production.',
+      'Mon travail couvre l’architecture d’applications IA, le développement backend, le traitement asynchrone, l’infrastructure as code et les workflows de déploiement.',
+      'J’accompagne les équipes qui développent des systèmes RAG, des pipelines de traitement documentaire et des applications intégrant des LLM.',
     ],
-  },
-  stats: {
-    experience: "Années d'Expérience",
-    projects: 'Projets IA Majeurs',
-    articles: 'Articles Techniques',
-    papers: 'Publications',
-  },
-  portfolio: {
-    title: 'Projets',
-    subtitle:
-      'Sélection de travaux en intelligence artificielle et développement web.',
-    empty: 'Aucun projet publié pour le moment.',
-    seeMore: 'Voir plus de projets',
-    items: [],
   },
   insights: {
     title: 'Blog',
     subtitle:
-      'Documentation technique, articles de blog et archives académiques.',
+      'Notes pratiques sur le RAG, l’évaluation des LLM et les systèmes d’IA en production.',
     items: [
       {
-        category: 'Leadership Technique',
-        title: 'Benchmark & Optimisation LLM',
+        category: 'Benchmark backend',
+        title: 'Quel langage pour un backend performant en 2026 ?',
         link: '/blog/benchmark',
-        desc: "Analyse des coûts des LLMs, architectures RAG et sécurité des systèmes d'IA.",
+        desc: 'Retour d’expérience sur un benchmark de backends avec Grafana K6.',
       },
     ],
   },
   benchmarkArticle: {
-    title: 'Optimisation & Benchmark LLM',
-    subtitle:
-      "Réduction des coûts et de la latence pour la mise en production d'IA Générative.",
+    title: 'Quel langage pour un backend performant en 2026 ?',
+    subtitle: 'Benchmarker avec Grafana K6.',
     content: [
-      "Chez Galadrim, j'ai mené une étude approfondie sur les performances des différents LLMs du marché (OpenAI, Anthropic, Mistral, Llama).",
-      "L'objectif était de définir des abaques de coût/performance pour guider nos choix d'architecture RAG.",
-      "J'ai développé un protocole de test automatisé mesurant la latence (TTFT, TPS) et la qualité des réponses sur des tâches spécifiques (résumé, extraction, classification).",
+      'Dans cet article publié chez Galadrim, j’ai comparé des implémentations backend en Go, Rust, Python et JavaScript pour une API REST représentative.',
+      'Le protocole s’appuie sur Grafana K6 et simule le parcours d’un utilisateur sur un mini réseau social, avec une charge allant de 50 à 1 000 utilisateurs virtuels simultanés.',
+      'L’article présente la méthodologie, les limites du benchmark et les enseignements pour choisir entre performance brute, productivité et contraintes d’architecture.',
     ],
-    galadrimLinkText: "Lire l'article complet sur le blog de Galadrim",
-    galadrimLink: 'https://www.galadrim.fr/blog',
+    externalLinkText: 'Lire l’article complet sur le blog de Galadrim',
+    externalLink:
+      'https://galadrim.fr/blog/quel-langage-pour-un-backend-performant-en-2026/',
   },
   contact: {
     send: 'Envoyer un message',
     subtitle: 'Collaborons sur vos projets',
-    desc: "Vous avez un projet d'intelligence artificielle, besoin d'une expertise technique ou simplement envie d'échanger ? N'hésitez pas à me contacter.",
-    address: 'Paris, France / Remote',
+    desc: 'Vous avez un projet IA autour du RAG, du traitement documentaire ou de l’infrastructure cloud ? N’hésitez pas à me contacter.',
+    address: 'Osaka, Japon · À distance',
     phone: 'linkedin.com/in/julien-chapuy',
-    email: 'contact@julienchapuy.fr',
+    email: 'pro@julienchapuy.fr',
     form: {
       name: 'Votre nom',
-      email: 'Votre email',
+      email: 'Votre email (optionnel)',
       subject: 'Objet',
       message: 'Message',
       btn: 'Envoyer le message',
+    },
+  },
+  pages: {
+    about: {
+      title: 'À propos | Julien Chapuy',
+      description:
+        'Parcours en ingénierie IA, réalisation technique et systèmes en production.',
+    },
+    resume: {
+      title: 'CV | Julien Chapuy',
+      description:
+        'Parcours en ingénierie IA, réalisation technique et systèmes en production.',
+    },
+    blog: {
+      title: 'Blog | Julien Chapuy',
+      description:
+        'Notes pratiques sur le RAG, l’évaluation des LLM et les systèmes d’IA en production.',
+    },
+    benchmark: {
+      title:
+        'Quel langage pour un backend performant en 2026 ? | Julien Chapuy',
+      description:
+        'Retour d’expérience sur un benchmark de backends avec Grafana K6.',
     },
   },
   notFound: {

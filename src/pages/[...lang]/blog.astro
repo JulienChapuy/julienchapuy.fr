@@ -16,12 +16,12 @@ const { lang } = Astro.props;
 const data = siteData[lang as 'fr' | 'en'];
 const content = data.insights;
 
-const title = `${data.insights.title} | ${data.meta.title}`;
+const page = data.pages.blog;
 ---
 
 <Layout
-  title={title}
-  description={data.meta.description}
+  title={page.title}
+  description={page.description}
   lang={lang as 'fr' | 'en'}
 >
   <div style="padding-top: 100px;">
