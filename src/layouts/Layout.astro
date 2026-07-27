@@ -17,7 +17,6 @@ const frPath = path.startsWith('/en') ? path.slice(3) || '/' : path;
 const enPath = `/en${frPath === '/' ? '' : frPath}`;
 const site = Astro.site ?? Astro.url;
 const canonical = new URL(path === '/' ? '/' : `${path}/`, site);
-import 'devicon/devicon.min.css';
 import Navbar from '../components/Navbar.astro';
 import { ClientRouter } from 'astro:transitions';
 import BackToTop from '../components/ui/BackToTop';
@@ -65,7 +64,7 @@ import BackToTop from '../components/ui/BackToTop';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@400..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bricolage+Grotesque:wght@400..800&display=swap"
       rel="stylesheet"
     />
 
@@ -126,7 +125,7 @@ import BackToTop from '../components/ui/BackToTop';
               );
             }
           }
-        } catch (e) {
+        } catch {
           // localStorage indisponible (navigation privée stricte) : on
           // reste simplement sur la langue de l'URL visitée.
         }
@@ -137,6 +136,6 @@ import BackToTop from '../components/ui/BackToTop';
     <Navbar lang={lang} />
     <slot />
 
-    <BackToTop client:load />
+    <BackToTop client:idle />
   </body>
 </html>
