@@ -13,7 +13,20 @@
     "typecheck": "astro check && tsc --noEmit",
     "check:content": "bun scripts/check-content.ts",
     "export:linkedin": "bun scripts/export-linkedin-profile.mjs",
-    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run check:content && bun run build"
+    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run check:content && bun run build",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "bunx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,astro}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,json,md,html}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@astrojs/react": "^6.0.1",
@@ -35,8 +48,10 @@
     "astro-eslint-parser": "^3.0.0",
     "eslint": "^10.7.0",
     "eslint-plugin-astro": "^3.0.1",
+    "lint-staged": "^17.2.0",
     "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.64.0"
   },
