@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './Experience.module.scss';
-import { motion, AnimatePresence } from 'framer-motion';
 import Timeline from './Timeline';
 
 interface Role {
@@ -88,44 +87,36 @@ const Experience: React.FC<ExperienceProps> = ({
           role="tabpanel"
           aria-labelledby={`experience-tab-${activeTab}`}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className={styles['company-header']}>
-                <h3>
-                  {displayedJobs[activeTab].url ? (
-                    <a
-                      href={displayedJobs[activeTab].url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles['company-link']}
-                    >
-                      {displayedJobs[activeTab].company}
-                    </a>
-                  ) : (
-                    displayedJobs[activeTab].company
-                  )}
-                </h3>
-              </div>
+          <div key={activeTab} className={styles['tab-panel']}>
+            <div className={styles['company-header']}>
+              <h3>
+                {displayedJobs[activeTab].url ? (
+                  <a
+                    href={displayedJobs[activeTab].url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles['company-link']}
+                  >
+                    {displayedJobs[activeTab].company}
+                  </a>
+                ) : (
+                  displayedJobs[activeTab].company
+                )}
+              </h3>
+            </div>
 
-              <div className={styles['timeline-wrapper']}>
-                <Timeline
-                  items={displayedJobs[activeTab].roles.map((role, index) => ({
-                    title: role.role,
-                    period: role.period,
-                    description: role.desc,
-                    stack: role.stack,
-                    isActive: activeTab === 0 && index === 0,
-                  }))}
-                />
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            <div className={styles['timeline-wrapper']}>
+              <Timeline
+                items={displayedJobs[activeTab].roles.map((role, index) => ({
+                  title: role.role,
+                  period: role.period,
+                  description: role.desc,
+                  stack: role.stack,
+                  isActive: activeTab === 0 && index === 0,
+                }))}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

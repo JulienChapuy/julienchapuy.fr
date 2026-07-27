@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import styles from './BackToTop.module.scss';
 
 const BackToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 100) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.scrollY > 100);
     };
 
     window.addEventListener('scroll', toggleVisibility);
@@ -26,49 +22,16 @@ const BackToTop: React.FC = () => {
   };
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.button
-          type="button"
-          aria-label="Retour en haut"
-          className="back-to-top"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          onClick={scrollToTop}
-          style={{
-            position: 'fixed',
-            visibility: 'visible',
-            opacity: 1,
-            right: '15px',
-            bottom: '15px',
-            zIndex: 996,
-            background: 'var(--primary)',
-            width: '40px',
-            height: '40px',
-            borderRadius: '50px',
-            transition: 'all 0.4s',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            border: 'none',
-            padding: 0,
-            boxShadow:
-              '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          }}
-        >
-          <i
-            className="fa fa-chevron-up"
-            style={{
-              color: 'var(--on-primary)',
-              fontSize: '24px',
-              lineHeight: 0,
-            }}
-          ></i>
-        </motion.button>
-      )}
-    </AnimatePresence>
+    <button
+      type="button"
+      aria-label="Retour en haut"
+      aria-hidden={!isVisible}
+      tabIndex={isVisible ? 0 : -1}
+      className={`${styles['back-to-top']} ${isVisible ? styles.visible : ''}`}
+      onClick={scrollToTop}
+    >
+      <i className="fa fa-chevron-up"></i>
+    </button>
   );
 };
 

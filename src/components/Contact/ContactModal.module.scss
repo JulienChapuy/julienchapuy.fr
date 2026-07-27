@@ -11,6 +11,18 @@
   justify-content: center;
   z-index: 2000;
   padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 }
 
 .modal-content {
@@ -22,6 +34,12 @@
   padding: 2.5rem;
   position: relative;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.2s ease;
+
+  .open & {
+    transform: scale(1) translateY(0);
+  }
 
   .close-btn {
     position: absolute;
