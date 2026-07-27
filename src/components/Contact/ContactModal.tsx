@@ -40,12 +40,11 @@ const ContactModal: React.FC<ContactModalProps> = ({
     event.preventDefault();
     const values = new FormData(event.currentTarget);
     const subject = String(values.get('subject') || 'Contact depuis le site');
-    const body = [
-      `Nom : ${values.get('name') || ''}`,
-      `Email : ${values.get('email') || ''}`,
-      '',
-      String(values.get('message') || ''),
-    ].join('\n');
+    const replyEmail = String(values.get('email') || '').trim();
+    const bodyLines = [`Nom : ${values.get('name') || ''}`];
+    if (replyEmail) bodyLines.push(`Email : ${replyEmail}`);
+    bodyLines.push('', String(values.get('message') || ''));
+    const body = bodyLines.join('\n');
     setStatus('Ouverture de votre client email…');
     window.location.href = `mailto:${content.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
@@ -97,7 +96,6 @@ const ContactModal: React.FC<ContactModalProps> = ({
                 id="modal-email"
                 name="email"
                 placeholder={content.form.email}
-                required
               />
             </div>
             <div className={styles['form-group']}>
