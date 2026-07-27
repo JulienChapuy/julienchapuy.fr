@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Julien Chapuy — palette de marque
+   Sapin / terre cuite. Validée le 2026-07-27.
+
+   Ratios WCAG vérifiés : voir brand/README.md.
+   Le mode sombre est le mode par défaut du site.
+   ========================================================================== */
+
+:root {
+  --background: #0b0f0d;
+  --surface: #131915;
+  --border: #2a332d;
+
+  --primary: #5fa47e;
+  --accent: #d4874c;
+
+  --text: #edf2ee;
+  --text-muted: #a4b0a8;
+
+  /* Couleur du texte posé sur un aplat de primary / accent.
+     Sans ces deux tokens, un bouton primaire hérite d'un blanc en dur
+     et devient illisible dès que la couleur d'aplat est claire. */
+  --on-primary: #07130d;
+  --on-accent: #1b0d04;
+}
+
+[data-theme='light'] {
+  --background: #f7f8f5;
+  --surface: #ffffff;
+  --border: #d8ded7;
+
+  --primary: #285943;
+  --accent: #a85d2a;
+
+  --text: #202821;
+  --text-muted: #677269;
+
+  --on-primary: #ffffff;
+  --on-accent: #ffffff;
+}

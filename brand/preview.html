@@ -1,0 +1,2274 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DA — Julien Chapuy · Banc d'essai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Chivo:wght@400;500;600;700&family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Schibsted+Grotesk:wght@400;500;600;700&family=Familjen+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Darker+Grotesque:wght@400;500;600;700;800&family=Fraunces:wght@400;600;700&family=Young+Serif&family=Newsreader:wght@400;500;600&family=Bitter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Roboto+Mono:wght@400;500&family=Space+Mono:wght@400;700&family=DM+Mono:wght@400;500&family=Geist+Mono:wght@400;500&family=Fira+Code:wght@400;500&family=Azeret+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---------- palette par défaut (écrasée par JS) ---------- */
+      :root {
+        --bg: #09090b;
+        --surface: #121214;
+        --border: #27272a;
+        --primary: #6366f1;
+        --accent: #8b5cf6;
+        --text: #fafafa;
+        --muted: #a1a1aa;
+
+        --font-display: 'Inter', system-ui, sans-serif;
+        --font-body: 'Inter', system-ui, sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --display-weight: 700;
+        --display-tracking: -0.03em;
+
+        /* chrome de l'outil — indépendant de la palette testée */
+        --ui-bg: #0c0c0e;
+        --ui-panel: #151518;
+        --ui-line: #2a2a30;
+        --ui-text: #e8e8ea;
+        --ui-muted: #8b8b93;
+        --ui-hl: #6366f1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--ui-bg);
+        color: var(--ui-text);
+        font-family: 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- layout ---------- */
+      .app {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        min-height: 100vh;
+      }
+      @media (max-width: 900px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      aside {
+        background: var(--ui-panel);
+        border-right: 1px solid var(--ui-line);
+        padding: 24px 20px 60px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+      @media (max-width: 900px) {
+        aside {
+          position: static;
+          height: auto;
+        }
+      }
+
+      aside h1 {
+        font-size: 15px;
+        margin: 0 0 4px;
+        letter-spacing: -0.01em;
+      }
+      aside .sub {
+        font-size: 12px;
+        color: var(--ui-muted);
+        margin: 0 0 28px;
+        line-height: 1.5;
+      }
+
+      .group {
+        margin-bottom: 26px;
+      }
+      .group > label {
+        display: block;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--ui-muted);
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .opts {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .opt {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border: 1px solid var(--ui-line);
+        color: var(--ui-text);
+        border-radius: 8px;
+        padding: 9px 10px;
+        font: inherit;
+        font-size: 12.5px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .opt:hover {
+        border-color: #46464f;
+        background: #1b1b1f;
+      }
+      .opt[aria-pressed='true'] {
+        border-color: var(--ui-hl);
+        background: rgba(99, 102, 241, 0.12);
+      }
+      .opt .name {
+        flex: 1;
+        min-width: 0;
+      }
+      .opt .hint {
+        display: block;
+        font-size: 10.5px;
+        color: var(--ui-muted);
+        margin-top: 2px;
+      }
+
+      .swatches {
+        display: flex;
+        gap: 3px;
+        flex: 0 0 auto;
+      }
+      .swatches i {
+        width: 11px;
+        height: 22px;
+        border-radius: 3px;
+        display: block;
+      }
+
+      .miniLogo {
+        width: 26px;
+        height: 26px;
+        flex: 0 0 auto;
+        color: var(--ui-text);
+      }
+
+      /* ---------- zone d'aperçu ---------- */
+      main {
+        padding: 28px 32px 80px;
+        max-width: 1180px;
+      }
+      section {
+        margin-bottom: 44px;
+      }
+      section > h2 {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--ui-muted);
+        font-weight: 600;
+        margin: 0 0 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--ui-line);
+      }
+      .note {
+        font-size: 12px;
+        color: var(--ui-muted);
+        margin: -6px 0 14px;
+        line-height: 1.6;
+      }
+
+      .card {
+        background: var(--bg);
+        border: 1px solid var(--ui-line);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      /* ---------- grille de logos ---------- */
+      .famGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+        gap: 12px;
+      }
+      .famHead {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: var(--ui-text);
+        margin: 26px 0 11px;
+        letter-spacing: 0.01em;
+      }
+      .famHead:first-child {
+        margin-top: 0;
+      }
+      .famLabel {
+        display: block;
+        font-size: 9.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--ui-muted);
+        margin: 12px 0 6px;
+        font-weight: 600;
+      }
+      .famLabel:first-child {
+        margin-top: 0;
+      }
+      .logoCell {
+        background: var(--bg);
+        border: 1px solid var(--ui-line);
+        border-radius: 12px;
+        padding: 18px 12px 12px;
+        cursor: pointer;
+        text-align: center;
+        transition:
+          border-color 0.15s,
+          transform 0.15s;
+      }
+      .logoCell:hover {
+        transform: translateY(-2px);
+        border-color: #46464f;
+      }
+      .logoCell[aria-pressed='true'] {
+        border-color: var(--ui-hl);
+        box-shadow: 0 0 0 1px var(--ui-hl);
+      }
+      .logoCell svg {
+        width: 66px;
+        height: 66px;
+        color: var(--text);
+      }
+      .logoCell .cap {
+        font-size: 11px;
+        color: var(--ui-muted);
+        margin-top: 12px;
+        line-height: 1.4;
+      }
+      .logoCell .cap b {
+        display: block;
+        color: var(--ui-text);
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 2px;
+      }
+
+      /* ---------- test d'échelle ---------- */
+      .scaleRow {
+        display: flex;
+        align-items: flex-end;
+        gap: 30px;
+        padding: 26px;
+        flex-wrap: wrap;
+      }
+      .scaleItem {
+        text-align: center;
+        color: var(--text);
+      }
+      .scaleItem span {
+        display: block;
+        font-size: 10px;
+        color: var(--ui-muted);
+        margin-top: 8px;
+        font-family: var(--font-mono);
+      }
+      .onAccent {
+        background: var(--primary);
+        border-radius: 10px;
+        padding: 10px;
+        color: var(--on-primary);
+      }
+
+      /* ---------- lockups ---------- */
+      .lockups {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 760px) {
+        .lockups {
+          grid-template-columns: 1fr;
+        }
+      }
+      .lockup {
+        background: var(--bg-d);
+        border: 1px solid var(--border-d);
+        border-radius: 12px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .lockup.light {
+        background: var(--bg-l);
+        border-color: var(--border-l);
+      }
+      .lockH {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        color: var(--text-d);
+      }
+      .lockup.light .lockH {
+        color: var(--text-l);
+      }
+      .lockH svg {
+        width: 40px;
+        height: 40px;
+      }
+      .lockH .wm {
+        font-family: var(--font-display);
+        font-weight: var(--display-weight);
+        letter-spacing: var(--display-tracking);
+        font-size: 21px;
+        line-height: 1.1;
+      }
+      .lockH .wm small {
+        display: block;
+        font-family: var(--font-mono);
+        font-weight: 400;
+        font-size: 9.5px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--muted-d);
+        margin-top: 4px;
+      }
+      .lockup.light .wm small {
+        color: var(--muted-l);
+      }
+
+      /* ---------- maquette site ---------- */
+      .site {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+      }
+      .siteNav {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 15px 30px;
+        border-bottom: 1px solid var(--border);
+      }
+      .siteNav svg {
+        width: 26px;
+        height: 26px;
+        color: var(--text);
+      }
+      .siteNav .brand {
+        font-family: var(--font-display);
+        font-weight: 600;
+        letter-spacing: var(--display-tracking);
+        font-size: 15px;
+      }
+      .siteNav nav {
+        margin-left: auto;
+        display: flex;
+        gap: 22px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .siteNav nav b {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .siteHero {
+        padding: 68px 30px 74px;
+        background:
+          radial-gradient(
+            circle at 88% 4%,
+            color-mix(in srgb, var(--primary) 16%, transparent),
+            transparent 42%
+          ),
+          radial-gradient(
+            circle at 6% 96%,
+            color-mix(in srgb, var(--accent) 12%, transparent),
+            transparent 42%
+          );
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 16px;
+      }
+      .siteHero h3 {
+        font-family: var(--font-display);
+        font-weight: var(--display-weight);
+        letter-spacing: var(--display-tracking);
+        font-size: 46px;
+        line-height: 1.06;
+        margin: 0 0 16px;
+      }
+      .siteHero p {
+        color: var(--muted);
+        max-width: 520px;
+        font-size: 15.5px;
+        line-height: 1.65;
+        margin: 0 0 26px;
+      }
+      .btns {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btnP {
+        background: var(--primary);
+        color: var(--on-primary);
+        border: 0;
+        border-radius: 9px;
+        padding: 11px 22px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .btnG {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 11px 22px;
+        font: inherit;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .btnA {
+        background: var(--accent);
+        color: var(--on-accent);
+        border: 0;
+        border-radius: 9px;
+        padding: 11px 22px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 0 30px 34px;
+      }
+      @media (max-width: 760px) {
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+      .c {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+      }
+      .c h4 {
+        font-family: var(--font-display);
+        font-size: 15px;
+        margin: 0 0 7px;
+        letter-spacing: var(--display-tracking);
+      }
+      .c p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .c .tag {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        color: var(--primary);
+        letter-spacing: 0.08em;
+        display: block;
+        margin-bottom: 11px;
+      }
+
+      /* ---------- bannière LinkedIn 1584×396 ---------- */
+      .bannerWrap {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+        border: 1px solid var(--ui-line);
+      }
+      .bannerScale {
+        width: 1584px;
+        transform-origin: top left;
+      }
+      .banner {
+        width: 1584px;
+        height: 396px;
+        position: relative;
+        background: var(--bg);
+        color: var(--text);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        font-family: var(--font-body);
+      }
+      .banner .glowA,
+      .banner .glowB {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        pointer-events: none;
+      }
+      .banner .glowA {
+        width: 620px;
+        height: 620px;
+        right: -130px;
+        top: -290px;
+        background: color-mix(in srgb, var(--primary) 42%, transparent);
+      }
+      .banner .glowB {
+        width: 480px;
+        height: 480px;
+        left: 240px;
+        bottom: -300px;
+        background: color-mix(in srgb, var(--accent) 28%, transparent);
+      }
+      .banner .grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.5;
+        background-image:
+          linear-gradient(
+            to right,
+            color-mix(in srgb, var(--border) 70%, transparent) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--border) 70%, transparent) 1px,
+            transparent 1px
+          );
+        background-size: 44px 44px;
+        mask-image: radial-gradient(
+          ellipse 70% 100% at 30% 50%,
+          #000 20%,
+          transparent 75%
+        );
+      }
+      /* zone masquée par la photo de profil LinkedIn (desktop) */
+      .banner .safe {
+        position: absolute;
+        left: 62px;
+        bottom: -60px;
+        width: 212px;
+        height: 212px;
+        border-radius: 50%;
+        border: 2px dashed color-mix(in srgb, var(--muted) 55%, transparent);
+        pointer-events: none;
+        z-index: 5;
+      }
+      .banner .safe span {
+        position: absolute;
+        top: 34px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--muted);
+      }
+      body.hideSafe .banner .safe {
+        display: none;
+      }
+
+      .bannerInner {
+        position: relative;
+        z-index: 2;
+        padding-left: 330px;
+        padding-right: 70px;
+        width: 100%;
+      }
+      .bannerInner .mark {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 22px;
+      }
+      .bannerInner .mark svg {
+        width: 46px;
+        height: 46px;
+        color: var(--primary);
+      }
+      .bannerInner .mark .nm {
+        font-family: var(--font-display);
+        font-weight: var(--display-weight);
+        letter-spacing: var(--display-tracking);
+        font-size: 27px;
+      }
+      .bannerInner h3 {
+        font-family: var(--font-display);
+        font-weight: var(--display-weight);
+        letter-spacing: var(--display-tracking);
+        font-size: 50px;
+        line-height: 1.08;
+        margin: 0 0 16px;
+        max-width: 900px;
+      }
+      .bannerInner h3 em {
+        font-style: normal;
+        color: var(--primary);
+      }
+      .bannerInner .kw {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+      }
+      .bannerInner .kw i {
+        font-style: normal;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--surface) 80%, transparent);
+        border-radius: 999px;
+        padding: 7px 16px;
+      }
+      .bannerInner .loc {
+        position: absolute;
+        right: 70px;
+        top: -78px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .bannerInner .loc b {
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      /* ---------- typo ---------- */
+      .typo {
+        background: var(--bg);
+        color: var(--text);
+        padding: 30px;
+        border: 1px solid var(--ui-line);
+        border-radius: 14px;
+      }
+      .typo .d1 {
+        font-family: var(--font-display);
+        font-weight: var(--display-weight);
+        letter-spacing: var(--display-tracking);
+        font-size: 44px;
+        line-height: 1.08;
+        margin: 0 0 6px;
+      }
+      .typo .d2 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        letter-spacing: var(--display-tracking);
+        font-size: 24px;
+        margin: 22px 0 6px;
+      }
+      .typo .body {
+        font-family: var(--font-body);
+        font-size: 15.5px;
+        line-height: 1.7;
+        color: var(--muted);
+        max-width: 640px;
+        margin: 0 0 18px;
+      }
+      .typo code {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 3px 8px;
+        color: var(--primary);
+      }
+      .typo .spec {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        line-height: 1.9;
+      }
+
+      /* ---------- tokens ---------- */
+      .tokens {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+        gap: 8px;
+      }
+      .tok {
+        border: 1px solid var(--ui-line);
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .tok .chip {
+        height: 56px;
+      }
+      .tok .meta {
+        padding: 8px 10px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        background: var(--ui-panel);
+      }
+      .tok .meta b {
+        display: block;
+        color: var(--ui-text);
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+      .tok .meta span {
+        color: var(--ui-muted);
+      }
+
+      /* ---------- éditeur de palette ---------- */
+      .edBar {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .edBtn {
+        background: var(--ui-hl);
+        color: #fff;
+        border: 0;
+        border-radius: 8px;
+        padding: 9px 15px;
+        font: inherit;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .edBtn.ghost {
+        background: transparent;
+        color: var(--ui-muted);
+        border: 1px solid var(--ui-line);
+      }
+      .edBtn:hover {
+        opacity: 0.9;
+      }
+
+      .edWrap {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 12px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .edWrap {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .editor {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 7px;
+        background: var(--ui-panel);
+        border: 1px solid var(--ui-line);
+        border-radius: 12px;
+        padding: 14px;
+      }
+      .edRow {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        background: var(--ui-bg);
+        border: 1px solid var(--ui-line);
+        border-radius: 8px;
+        padding: 7px 9px;
+      }
+      .edRow input[type='color'] {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border: 1px solid var(--ui-line);
+        border-radius: 6px;
+        background: none;
+        cursor: pointer;
+        flex: 0 0 auto;
+      }
+      .edRow input[type='color']::-webkit-color-swatch-wrapper {
+        padding: 2px;
+      }
+      .edRow input[type='color']::-webkit-color-swatch {
+        border: none;
+        border-radius: 4px;
+      }
+      .edName {
+        flex: 1;
+        min-width: 0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10.5px;
+        color: var(--ui-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .edHex {
+        width: 78px;
+        flex: 0 0 auto;
+        background: var(--ui-panel);
+        border: 1px solid var(--ui-line);
+        border-radius: 6px;
+        color: var(--ui-text);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        padding: 5px 6px;
+        text-transform: lowercase;
+      }
+      .edHex:focus {
+        outline: 1px solid var(--ui-hl);
+        border-color: var(--ui-hl);
+      }
+      .edHex.bad {
+        border-color: #b91c1c;
+      }
+      .edAuto {
+        flex: 0 0 auto;
+        background: transparent;
+        border: 1px solid var(--ui-line);
+        border-radius: 6px;
+        color: var(--ui-muted);
+        font: inherit;
+        font-size: 10px;
+        padding: 5px 6px;
+        cursor: pointer;
+      }
+      .edAuto:hover {
+        color: var(--ui-text);
+        border-color: #46464f;
+      }
+
+      .contrast {
+        background: var(--ui-panel);
+        border: 1px solid var(--ui-line);
+        border-radius: 12px;
+        padding: 14px 16px;
+      }
+      .contrast h4 {
+        margin: 0 0 11px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--ui-muted);
+        font-weight: 600;
+      }
+      .cRow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--ui-line);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+      }
+      .cRow:last-of-type {
+        border-bottom: 0;
+      }
+      .cRow .pair {
+        flex: 1;
+        min-width: 0;
+        color: var(--ui-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .cRow .val {
+        color: var(--ui-text);
+      }
+      .cRow .badge {
+        border-radius: 999px;
+        padding: 2px 7px;
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .badge.ok {
+        background: rgba(4, 120, 87, 0.22);
+        color: #4ade80;
+      }
+      .badge.warn {
+        background: rgba(180, 83, 9, 0.22);
+        color: #fbbf24;
+      }
+      .badge.fail {
+        background: rgba(185, 28, 28, 0.22);
+        color: #f87171;
+      }
+      .cNote {
+        margin: 11px 0 0;
+        font-size: 10.5px;
+        line-height: 1.6;
+        color: var(--ui-muted);
+      }
+
+      /* ---------- barre du bas ---------- */
+      .verdict {
+        position: fixed;
+        bottom: 0;
+        left: 300px;
+        right: 0;
+        background: rgba(12, 12, 14, 0.94);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid var(--ui-line);
+        padding: 11px 32px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11.5px;
+        color: var(--ui-muted);
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        flex-wrap: wrap;
+        z-index: 50;
+      }
+      @media (max-width: 900px) {
+        .verdict {
+          left: 0;
+        }
+      }
+      .verdict b {
+        color: var(--ui-text);
+        font-weight: 500;
+      }
+      .verdict .copy {
+        margin-left: auto;
+        background: var(--ui-hl);
+        color: #fff;
+        border: 0;
+        border-radius: 7px;
+        padding: 7px 14px;
+        font: inherit;
+        font-size: 11px;
+        cursor: pointer;
+      }
+      .toggle {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
+        user-select: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside>
+        <h1>DA — Julien Chapuy</h1>
+        <p class="sub">
+          Clique pour tester. Tout se met à jour en direct : logo, site,
+          bannière LinkedIn, typo.
+        </p>
+
+        <div class="group">
+          <label>Palette</label>
+          <div class="opts" id="palOpts"></div>
+        </div>
+
+        <div class="group">
+          <label>Typographie</label>
+          <div class="opts" id="fontOpts"></div>
+        </div>
+
+        <div class="group">
+          <label>Logo</label>
+          <div class="opts" id="logoOpts"></div>
+        </div>
+
+        <div class="group">
+          <label>Affichage</label>
+          <div class="opts">
+            <button class="opt" id="btnSafe" aria-pressed="true">
+              <span class="name">Zone photo LinkedIn</span>
+            </button>
+            <button class="opt" id="btnLight" aria-pressed="false">
+              <span class="name"
+                >Mode clair<span class="hint"
+                  >Bascule toute la page — site, bannière, typo</span
+                ></span
+              >
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <section>
+          <h2>1 — Logos</h2>
+          <p class="note">
+            5 pistes. Clique pour en faire la marque active partout ailleurs sur
+            la page.
+          </p>
+          <div class="logoGrid" id="logoGrid"></div>
+        </section>
+
+        <section>
+          <h2>2 — Test d'échelle &amp; contexte</h2>
+          <p class="note">
+            Le vrai filtre : un logo qui survit à 16px (favicon) et sur aplat de
+            couleur. Si ça casse ici, ça casse partout.
+          </p>
+          <div class="card">
+            <div class="scaleRow" id="scaleRow"></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>3 — Lockup (marque + nom)</h2>
+          <div class="lockups">
+            <div class="lockup" id="lockDark"></div>
+            <div class="lockup light" id="lockLight"></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>4 — Bannière LinkedIn · 1584 × 396</h2>
+          <p class="note">
+            Cercle pointillé = zone masquée par ta photo de profil. Rien
+            d'important dedans.
+          </p>
+          <div class="bannerWrap" id="bannerWrap">
+            <div class="bannerScale" id="bannerScale">
+              <div class="banner">
+                <div class="glowA"></div>
+                <div class="glowB"></div>
+                <div class="grid"></div>
+                <div class="safe"><span>photo</span></div>
+                <div class="bannerInner">
+                  <div class="loc">Osaka · <b>日本</b></div>
+                  <div class="mark">
+                    <span id="bannerLogo"></span>
+                    <span class="nm">Julien Chapuy</span>
+                  </div>
+                  <h3>Ingénieur <em>IA</em> freelance</h3>
+                  <div class="kw">
+                    <i>RAG</i><i>Traitement documentaire</i><i>Infra cloud</i
+                    ><i>Python · TypeScript · Rust</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>5 — Site (accueil)</h2>
+          <div class="card site">
+            <div class="siteNav">
+              <span id="navLogo"></span>
+              <span class="brand">Julien Chapuy</span>
+              <nav>
+                <b>Accueil</b><span>À propos</span><span>Blog</span
+                ><span>CV</span>
+              </nav>
+            </div>
+            <div class="siteHero">
+              <div class="eyebrow">Ingénieur IA freelance · Osaka</div>
+              <h3>Des systèmes IA<br />qui tiennent en production.</h3>
+              <p>
+                RAG, traitement documentaire et infrastructure cloud. De la
+                preuve de concept au déploiement, sans dette technique.
+              </p>
+              <div class="btns">
+                <button class="btnP">Me contacter</button>
+                <button class="btnG">Voir le CV</button>
+                <button class="btnA">Accent</button>
+              </div>
+            </div>
+            <div class="cards">
+              <div class="c">
+                <span class="tag">01 — RAG</span>
+                <h4>Recherche augmentée</h4>
+                <p>
+                  Pipelines d'indexation et de récupération sur corpus métier.
+                </p>
+              </div>
+              <div class="c">
+                <span class="tag">02 — DOCS</span>
+                <h4>Traitement documentaire</h4>
+                <p>
+                  Extraction structurée à partir de PDF, scans et formulaires.
+                </p>
+              </div>
+              <div class="c">
+                <span class="tag">03 — CLOUD</span>
+                <h4>Infrastructure</h4>
+                <p>Terraform, conteneurs, CI/CD. Reproductible et mesuré.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>6 — Typographie</h2>
+          <div class="typo">
+            <p class="d1">Ingénieur IA freelance</p>
+            <p class="d2">RAG, traitement documentaire, infra cloud</p>
+            <p class="body">
+              Portez ce vieux whisky au juge blond qui fume. Les systèmes de
+              récupération augmentée exigent une évaluation continue&nbsp;: sans
+              jeu de test, un pipeline RAG dérive silencieusement. 0123456789 —
+              àéèêëîïôùûç
+            </p>
+            <p>
+              <code>uv run pytest --cov</code>
+              <code>terraform apply</code>
+            </p>
+            <div class="spec" id="fontSpec"></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>7 — Tokens (clic = copie)</h2>
+          <div class="tokens" id="tokens"></div>
+        </section>
+
+        <section>
+          <h2>8 — Palette personnalisée</h2>
+          <p class="note">
+            Chaque modification s’applique instantanément à toute la page.
+            L’éditeur agit sur le <b id="edMode">mode sombre</b> — bascule
+            « Mode clair » dans la barre latérale pour régler l’autre jeu.
+            Sauvegarde automatique dans ce navigateur.
+          </p>
+          <div class="edBar">
+            <button class="edBtn" id="btnFork">
+              Repartir de la palette active
+            </button>
+            <button class="edBtn" id="btnAutoContrast">
+              Corriger les contrastes on-*
+            </button>
+            <button class="edBtn" id="btnExport">Exporter le CSS</button>
+            <button class="edBtn ghost" id="btnResetPal">Réinitialiser</button>
+          </div>
+          <div class="edWrap">
+            <div class="editor" id="editor"></div>
+            <div class="contrast">
+              <h4>Contrastes WCAG</h4>
+              <div id="contrastRows"></div>
+              <p class="cNote">
+                AA exige 4.5:1 pour le texte courant, 3:1 pour les gros titres
+                et les éléments d’interface.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="verdict">
+      <span>Palette <b id="vPal">—</b></span>
+      <span>Typo <b id="vFont">—</b></span>
+      <span>Logo <b id="vLogo">—</b></span>
+      <button class="copy" id="btnCopy">Copier la combinaison</button>
+    </div>
+
+    <script>
+      /* =======================================================
+         LOGOS — tous en viewBox 0 0 96 96, stroke currentColor
+         ======================================================= */
+      const FAMILIES = {
+        mono: 'Famille A — Monogramme JC',
+        seal: 'Famille B — Sceau / hanko',
+      };
+
+      const LOGOS = {
+        /* ---------- Famille A : monogramme JC ---------- */
+        monoTangent: {
+          family: 'mono',
+          name: 'Arc + tangente',
+          hint: 'La version d’origine : J tangent à l’intérieur du C',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M70.4 29.6 A26 26 0 1 0 70.4 66.4" stroke="currentColor" stroke-width="8.5" stroke-linecap="round"/>
+  <path d="M46 28 V52 A10 10 0 0 1 26 52" stroke="${a}" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`,
+        },
+        monoSharp: {
+          family: 'mono',
+          name: 'Arc + tangente, coupé',
+          hint: 'Même construction que ton favori, terminaisons franches au lieu d’arrondies',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M70.5 35 A26 26 0 1 0 70.5 61" stroke="currentColor" stroke-width="9"/>
+  <path d="M46 26 V52 A10 10 0 0 1 26 52" stroke="${a}" stroke-width="9"/>
+</svg>`,
+        },
+        monoChamfer: {
+          family: 'mono',
+          name: 'Chanfreins 45°',
+          hint: 'Entre la courbe et la grille : angles cassés à 45°, aucune courbe',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M74 30 L68 24 H56 L50 30 V66 L56 72 H68 L74 66" stroke="currentColor" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M42 24 V56 L36 62 H28 L22 56 V52" stroke="${a}" stroke-width="7" stroke-linejoin="miter"/>
+</svg>`,
+        },
+        monoStencil: {
+          family: 'mono',
+          name: 'Pochoir',
+          hint: 'Traits interrompus · l’œil complète la forme. Très marquant, fragile en petit',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M70.4 29.6 A26 26 0 1 0 70.4 66.4" stroke="currentColor" stroke-width="9" stroke-dasharray="30 9"/>
+  <path d="M46 28 V52 A10 10 0 0 1 26 52" stroke="${a}" stroke-width="9" stroke-dasharray="17 8"/>
+</svg>`,
+        },
+        monoGrid: {
+          family: 'mono',
+          name: 'Grille orthogonale',
+          hint: 'Zéro courbe, angles vifs — registre ingénieur / plan technique',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M74 32 V26 H50 V70 H74 V64" stroke="currentColor" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M42 24 V60 H22 V50" stroke="${a}" stroke-width="7" stroke-linejoin="miter"/>
+</svg>`,
+        },
+
+        /* ---------- Famille B : sceau / hanko ---------- */
+        sealTensho: {
+          family: 'seal',
+          name: 'Sceau tensho',
+          hint: 'JC en traits droits façon écriture sigillaire — le plus authentique',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="76" height="76" rx="6" stroke="${a}" stroke-width="7"/>
+  <path d="M68 36 V30 H50 V66 H68 V60" stroke="currentColor" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M40 30 V56 H28 V48" stroke="currentColor" stroke-width="7" stroke-linejoin="miter"/>
+</svg>`,
+        },
+        sealBroken: {
+          family: 'seal',
+          name: 'Sceau ébréché',
+          hint: 'Cadre interrompu = bord d’encre. Moins rigide, plus artisanal',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M28 13 H76 A7 7 0 0 1 83 20 V56" stroke="${a}" stroke-width="7" stroke-linecap="round"/>
+  <path d="M68 83 H20 A7 7 0 0 1 13 76 V40" stroke="${a}" stroke-width="7" stroke-linecap="round"/>
+  <path d="M65 37 A15.5 15.5 0 1 0 65 59" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
+  <path d="M46 35 V51 A7 7 0 0 1 32 51" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`,
+        },
+        sealTenshoBroken: {
+          family: 'seal',
+          name: '★ Ébréché × tensho',
+          hint: 'Croisement de tes deux favoris : cadre cassé à angles vifs + JC en traits droits',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M30 13 H83 V56" stroke="${a}" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M66 83 H13 V40" stroke="${a}" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M68 36 V30 H50 V66 H68 V60" stroke="currentColor" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M40 30 V56 H28 V48" stroke="currentColor" stroke-width="7" stroke-linejoin="miter"/>
+</svg>`,
+        },
+        sealCorners: {
+          family: 'seal',
+          name: 'Équerres d’angle',
+          hint: 'Le cadre n’est plus dessiné, juste suggéré par 4 équerres. Le plus léger',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 32 V14 H32 M64 14 H82 V32 M82 64 V82 H64 M32 82 H14 V64" stroke="${a}" stroke-width="7" stroke-linejoin="miter"/>
+  <path d="M66 38 V33 H52 V63 H66 V58" stroke="currentColor" stroke-width="6.5" stroke-linejoin="miter"/>
+  <path d="M42 33 V54 H31 V47" stroke="currentColor" stroke-width="6.5" stroke-linejoin="miter"/>
+</svg>`,
+        },
+        sealColumn: {
+          family: 'seal',
+          name: 'Refend deux colonnes',
+          hint: 'Vrai gabarit de hanko à deux caractères : J et C séparés par un refend',
+          svg: (a) => `
+<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="76" height="76" rx="4" stroke="${a}" stroke-width="7"/>
+  <path d="M48 16 V80" stroke="${a}" stroke-width="4" opacity="0.45"/>
+  <path d="M36 30 V56 H26 V49" stroke="currentColor" stroke-width="6.5" stroke-linejoin="miter"/>
+  <path d="M72 38 V32 H58 V64 H72 V58" stroke="currentColor" stroke-width="6.5" stroke-linejoin="miter"/>
+</svg>`,
+        },
+      };
+
+      /* =======================================================
+         PALETTES
+         ======================================================= */
+      const PALETTES = {
+        retenue: {
+          name: '★ Retenue — Vert / Terre',
+          hint: 'Ta paire validée · sapin + terre cuite',
+          bg: '#0B0F0D',
+          surface: '#131915',
+          border: '#2A332D',
+          primary: '#5FA47E',
+          accent: '#D4874C',
+          text: '#EDF2EE',
+          muted: '#A4B0A8',
+          onPrimary: '#07130D',
+          onAccent: '#1B0D04',
+          bgL: '#F7F8F5',
+          surfaceL: '#FFFFFF',
+          borderL: '#D8DED7',
+          primaryL: '#285943',
+          accentL: '#A85D2A',
+          textL: '#202821',
+          mutedL: '#677269',
+          onPrimaryL: '#FFFFFF',
+          onAccentL: '#FFFFFF',
+        },
+        indigo: {
+          name: 'Indigo (actuel)',
+          hint: 'Zéro migration · peu différenciant',
+          bg: '#09090b',
+          surface: '#121214',
+          border: '#27272a',
+          primary: '#6366f1',
+          accent: '#8b5cf6',
+          text: '#fafafa',
+          muted: '#a1a1aa',
+          bgL: '#ffffff',
+          surfaceL: '#f8fafc',
+          borderL: '#e2e8f0',
+          textL: '#0f172a',
+          mutedL: '#64748b',
+        },
+        aishu: {
+          name: 'Ai / Shu (藍朱)',
+          hint: 'Indigo + vermillon · ancrage Japon',
+          bg: '#09090b',
+          surface: '#131317',
+          border: '#26262e',
+          primary: '#4f46e5',
+          accent: '#e8523f',
+          text: '#fafafa',
+          muted: '#a0a0ae',
+          bgL: '#fffdfb',
+          surfaceL: '#f6f5f2',
+          borderL: '#e4e1db',
+          textL: '#111017',
+          mutedL: '#6b6875',
+        },
+        bleuTeal: {
+          name: 'Bleu / Teal (la tienne)',
+          hint: 'Paire clair + sombre fournie · seule palette avec états sémantiques',
+          bg: '#0B1020',
+          surface: '#121A2D',
+          border: '#28344A',
+          primary: '#60A5FA',
+          accent: '#2DD4BF',
+          text: '#E2E8F0',
+          muted: '#94A3B8',
+          onPrimary: '#0B1020',
+          onAccent: '#0B1020',
+          bgL: '#F7F8FA',
+          surfaceL: '#FFFFFF',
+          borderL: '#E4E7EC',
+          primaryL: '#2457D6',
+          accentL: '#0F766E',
+          textL: '#16181D',
+          mutedL: '#667085',
+          onPrimaryL: '#ffffff',
+          onAccentL: '#ffffff',
+          extra: {
+            '--primary-hover': '#1D46B8',
+            '--success': '#047857',
+            '--warning': '#B45309',
+            '--danger': '#B91C1C',
+          },
+        },
+        forest: {
+          name: 'Noir / Vert / Marron',
+          hint: 'Sauge + terre cuite sur noir chaud · organique, peu vu en tech',
+          bg: '#0b0b0a',
+          surface: '#141412',
+          border: '#262420',
+          primary: '#6dae6f',
+          accent: '#a0714b',
+          text: '#f2f0ea',
+          muted: '#9c968a',
+          onPrimary: '#0b0b0a',
+          bgL: '#faf8f3',
+          surfaceL: '#ffffff',
+          borderL: '#e5e0d5',
+          primaryL: '#2f6b3d',
+          accentL: '#7a4f2e',
+          textL: '#1a1a15',
+          mutedL: '#6b665a',
+        },
+        bleuVert: {
+          name: 'Bleu / Vert',
+          hint: 'Bleu franc + vert signal · lisible, énergique, très « produit »',
+          bg: '#08111a',
+          surface: '#0f1b26',
+          border: '#1c2b39',
+          primary: '#4aa3ff',
+          accent: '#5fd07a',
+          text: '#e8f1f8',
+          muted: '#8ba3b8',
+          onPrimary: '#08111a',
+          onAccent: '#08111a',
+          bgL: '#f7fafc',
+          surfaceL: '#ffffff',
+          borderL: '#dde6ee',
+          primaryL: '#1560c4',
+          accentL: '#1f7a44',
+          textL: '#101a22',
+          mutedL: '#5c7080',
+        },
+        violetVert: {
+          name: 'Violet / Vert',
+          hint: 'Violet profond + vert menthe · le plus contrasté en teinte',
+          bg: '#0d0a14',
+          surface: '#16111f',
+          border: '#2a2038',
+          primary: '#a78bfa',
+          accent: '#5fe0a0',
+          text: '#f2eefa',
+          muted: '#a196b5',
+          onPrimary: '#0d0a14',
+          onAccent: '#0d0a14',
+          bgL: '#faf8fd',
+          surfaceL: '#ffffff',
+          borderL: '#e7e0f0',
+          primaryL: '#6d28d9',
+          accentL: '#047857',
+          textL: '#16101f',
+          mutedL: '#6b6180',
+        },
+        orTerre: {
+          name: 'Or / Noir / Marron',
+          hint: 'Or mat + terre sur noir chaud · registre artisanal, haut de gamme',
+          bg: '#0d0b07',
+          surface: '#17130c',
+          border: '#2b2418',
+          primary: '#e3b23c',
+          accent: '#8a5a33',
+          text: '#f5f0e4',
+          muted: '#a3977f',
+          onPrimary: '#0d0b07',
+          bgL: '#fdfbf5',
+          surfaceL: '#ffffff',
+          borderL: '#ebe3d2',
+          primaryL: '#8a6410',
+          accentL: '#6b4423',
+          textL: '#1a1509',
+          mutedL: '#6f6552',
+        },
+        kurenai: {
+          name: 'Kurenai (紅)',
+          hint: 'Rouge seul sur neutre chaud · le plus tranchant',
+          bg: '#0b0a0a',
+          surface: '#151212',
+          border: '#2a2222',
+          primary: '#d94136',
+          accent: '#e8d9c5',
+          text: '#f7f2ee',
+          muted: '#a09590',
+          onAccent: '#0b0a0a',
+          bgL: '#fffcf9',
+          surfaceL: '#f7f2ed',
+          borderL: '#e8ddd3',
+          textL: '#14100e',
+          mutedL: '#6d635c',
+        },
+        kon: {
+          name: 'Kon (紺)',
+          hint: 'Bleu nuit profond + or pâle · le fond n’est plus noir',
+          bg: '#0a1020',
+          surface: '#111a2e',
+          border: '#1e2a44',
+          primary: '#6f9fff',
+          accent: '#e8c37e',
+          text: '#eef3ff',
+          muted: '#8fa2c4',
+          onPrimary: '#0a1020',
+          onAccent: '#0a1020',
+          bgL: '#fbfcff',
+          surfaceL: '#f1f4fa',
+          borderL: '#dde3ef',
+          textL: '#0a1020',
+          mutedL: '#5c6b87',
+        },
+        slate: {
+          name: 'Ardoise',
+          hint: 'Gris-bleu neutre · registre outil dev, très crédible',
+          bg: '#0d1117',
+          surface: '#161b22',
+          border: '#262d38',
+          primary: '#58a6ff',
+          accent: '#d1d9e0',
+          text: '#e6edf3',
+          muted: '#7d8590',
+          onPrimary: '#0d1117',
+          onAccent: '#0d1117',
+          bgL: '#ffffff',
+          surfaceL: '#f6f8fa',
+          borderL: '#d0d7de',
+          textL: '#1f2328',
+          mutedL: '#59636e',
+        },
+        sumi: {
+          name: 'Sumi (encre)',
+          hint: 'Monochrome + ambre · éditorial, sobre',
+          bg: '#0a0a0a',
+          surface: '#141414',
+          border: '#282828',
+          primary: '#fafafa',
+          accent: '#f0a92c',
+          text: '#fafafa',
+          muted: '#8f8f8f',
+          onPrimary: '#0a0a0a',
+          onAccent: '#0a0a0a',
+          bgL: '#fcfcfa',
+          surfaceL: '#f3f3f0',
+          borderL: '#e0e0dc',
+          textL: '#0a0a0a',
+          mutedL: '#6e6e6e',
+        },
+      };
+
+      /* =======================================================
+         TYPOGRAPHIES
+         ======================================================= */
+      const FONT_GROUPS = {
+        neutral: 'Grotesques neutres — valeurs sûres',
+        character: 'Grotesques à caractère',
+        geometric: 'Géométriques — un peu de chaleur',
+        editorial: 'Éditorial / encre — écho au sceau',
+        radical: 'Radicales — à haut risque'
+      };
+
+      const FONTS = {
+        inter: {
+          group: 'neutral',
+          name: 'Inter + JetBrains Mono',
+          hint: 'Ton réglage actuel · le plus neutre, le plus sûr',
+          display: "'Inter', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'JetBrains Mono', monospace",
+          weight: 700,
+          tracking: '-0.03em',
+          spec: 'Inter 700 / -3% · Inter 400 · JetBrains Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        geist: {
+          group: 'neutral',
+          name: 'Geist + Geist Mono',
+          hint: 'Superfamille Vercel · sans et mono dessinés ensemble, très nets',
+          display: "'Geist', system-ui, sans-serif",
+          body: "'Geist', system-ui, sans-serif",
+          mono: "'Geist Mono', monospace",
+          weight: 700,
+          tracking: '-0.03em',
+          spec: 'Geist 700 / -3% · Geist 400 · Geist Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        plex: {
+          group: 'neutral',
+          name: 'IBM Plex Sans + Plex Mono',
+          hint: 'Superfamille · registre ingénierie assumé',
+          display: "'IBM Plex Sans', system-ui, sans-serif",
+          body: "'IBM Plex Sans', system-ui, sans-serif",
+          mono: "'IBM Plex Mono', monospace",
+          weight: 600,
+          tracking: '-0.02em',
+          spec: 'IBM Plex Sans 600 / -2% · Plex Sans 400 · Plex Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        publicSans: {
+          group: 'neutral',
+          name: 'Public Sans + Roboto Mono',
+          hint: 'Neutre institutionnel · zéro maniérisme, lisible partout',
+          display: "'Public Sans', system-ui, sans-serif",
+          body: "'Public Sans', system-ui, sans-serif",
+          mono: "'Roboto Mono', monospace",
+          weight: 700,
+          tracking: '-0.025em',
+          spec: 'Public Sans 700 / -2.5% · Public Sans 400 · Roboto Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        grotesk: {
+          group: 'character',
+          name: 'Space Grotesk + JetBrains',
+          hint: 'Chiffres marquants · le plus « tech » des grotesques',
+          display: "'Space Grotesk', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'JetBrains Mono', monospace",
+          weight: 700,
+          tracking: '-0.025em',
+          spec: 'Space Grotesk 700 / -2.5% · Inter 400 · JetBrains Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        archivo: {
+          group: 'character',
+          name: 'Archivo + Roboto Mono',
+          hint: 'Grotesque compacte · titres denses, variable en largeur',
+          display: "'Archivo', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Roboto Mono', monospace",
+          weight: 700,
+          tracking: '-0.035em',
+          spec: 'Archivo 700 / -3.5% · Inter 400 · Roboto Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        schibsted: {
+          group: 'character',
+          name: 'Schibsted Grotesk + JetBrains',
+          hint: 'Grotesque de presse nordique · terminaisons franches',
+          display: "'Schibsted Grotesk', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'JetBrains Mono', monospace",
+          weight: 700,
+          tracking: '-0.03em',
+          spec: 'Schibsted Grotesk 700 / -3% · Inter 400 · JetBrains Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        familjen: {
+          group: 'character',
+          name: 'Familjen Grotesk + Space Mono',
+          hint: 'Grotesque suédoise · coupes vives, proche des angles du sceau',
+          display: "'Familjen Grotesk', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Space Mono', monospace",
+          weight: 700,
+          tracking: '-0.025em',
+          spec: 'Familjen Grotesk 700 / -2.5% · Inter 400 · Space Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        chivo: {
+          group: 'character',
+          name: 'Chivo + Fira Code',
+          hint: 'Grotesque robuste · très solide en grosse graisse',
+          display: "'Chivo', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Fira Code', monospace",
+          weight: 700,
+          tracking: '-0.03em',
+          spec: 'Chivo 700 / -3% · Inter 400 · Fira Code 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        bricolage: {
+          group: 'character',
+          name: '★ Bricolage Grotesque',
+          hint: 'Retenue · variable optique, légèrement brute, artisanale',
+          display: "'Bricolage Grotesque', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "ui-monospace, 'SFMono-Regular', monospace",
+          weight: 700,
+          tracking: '-0.02em',
+          spec: 'Bricolage Grotesque 700 / -2% · Inter 400 · monospace système\nGoogle Fonts (Bricolage Grotesque, Inter) · gratuit en usage commercial (OFL)'
+        },
+        manrope: {
+          group: 'geometric',
+          name: 'Manrope + JetBrains',
+          hint: 'Géométrique à terminaisons nettes · chaleur discrète',
+          display: "'Manrope', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'JetBrains Mono', monospace",
+          weight: 800,
+          tracking: '-0.035em',
+          spec: 'Manrope 800 / -3.5% · Inter 400 · JetBrains Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        figtree: {
+          group: 'geometric',
+          name: 'Figtree + DM Mono',
+          hint: 'Ronde et ouverte · la plus accessible du lot',
+          display: "'Figtree', system-ui, sans-serif",
+          body: "'Figtree', system-ui, sans-serif",
+          mono: "'DM Mono', monospace",
+          weight: 800,
+          tracking: '-0.03em',
+          spec: 'Figtree 800 / -3% · Figtree 400 · DM Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        jakarta: {
+          group: 'geometric',
+          name: 'Plus Jakarta Sans + Plex Mono',
+          hint: 'Géométrique moderne · très utilisée en SaaS, donc rassurante',
+          display: "'Plus Jakarta Sans', system-ui, sans-serif",
+          body: "'Plus Jakarta Sans', system-ui, sans-serif",
+          mono: "'IBM Plex Mono', monospace",
+          weight: 800,
+          tracking: '-0.03em',
+          spec: 'Plus Jakarta Sans 800 / -3% · Jakarta 400 · Plex Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        youngSerif: {
+          group: 'editorial',
+          name: 'Young Serif + Inter',
+          hint: 'Serif épaisse, presque gravée · le plus proche de l’encre du sceau',
+          display: "'Young Serif', Georgia, serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'JetBrains Mono', monospace",
+          weight: 400,
+          tracking: '-0.01em',
+          spec: 'Young Serif 400 / -1% · Inter 400 · JetBrains Mono 400 — une seule graisse disponible\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        fraunces: {
+          group: 'editorial',
+          name: 'Fraunces + Inter',
+          hint: 'Serif variable « wonky » · organique, colle au vert/terre',
+          display: "'Fraunces', Georgia, serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Space Mono', monospace",
+          weight: 700,
+          tracking: '-0.02em',
+          spec: 'Fraunces 700 / -2% · Inter 400 · Space Mono 400 — axes optiques et wonk réglables\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        newsreader: {
+          group: 'editorial',
+          name: 'Newsreader + Inter',
+          hint: 'Serif de lecture · pose un ton éditorial sans lourdeur',
+          display: "'Newsreader', Georgia, serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'IBM Plex Mono', monospace",
+          weight: 600,
+          tracking: '-0.015em',
+          spec: 'Newsreader 600 / -1.5% · Inter 400 · Plex Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        bitter: {
+          group: 'editorial',
+          name: 'Bitter + Inter',
+          hint: 'Slab · rappelle le trait plein et droit du tensho',
+          display: "'Bitter', Georgia, serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Roboto Mono', monospace",
+          weight: 700,
+          tracking: '-0.025em',
+          spec: 'Bitter 700 / -2.5% · Inter 400 · Roboto Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        syne: {
+          group: 'radical',
+          name: 'Syne + Space Mono',
+          hint: 'Très typée, arty · mémorable mais vieillit vite',
+          display: "'Syne', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Space Mono', monospace",
+          weight: 800,
+          tracking: '-0.02em',
+          spec: 'Syne 800 / -2% · Inter 400 · Space Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+        darker: {
+          group: 'radical',
+          name: 'Darker Grotesque + Azeret',
+          hint: 'Très haute et condensée · titres spectaculaires, corps impossible',
+          display: "'Darker Grotesque', system-ui, sans-serif",
+          body: "'Inter', system-ui, sans-serif",
+          mono: "'Azeret Mono', monospace",
+          weight: 800,
+          tracking: '-0.02em',
+          spec: 'Darker Grotesque 800 / -2% · Inter 400 · Azeret Mono 400\nGoogle Fonts · gratuit en usage commercial (OFL)'
+        },
+      };
+
+      /* ======================================================= */
+      const state = {
+        pal: 'retenue',
+        font: 'bricolage',
+        logo: 'sealTenshoBroken',
+        mode: 'dark',
+      };
+
+      const byFamily = (fam) =>
+        Object.entries(LOGOS).filter(([, l]) => l.family === fam);
+
+      const darkSet = (p) => ({
+        bg: p.bg,
+        surface: p.surface,
+        border: p.border,
+        primary: p.primary,
+        accent: p.accent,
+        text: p.text,
+        muted: p.muted,
+        'on-primary': p.onPrimary || '#ffffff',
+        'on-accent': p.onAccent || '#ffffff',
+      });
+      const lightSet = (p) => ({
+        bg: p.bgL,
+        surface: p.surfaceL,
+        border: p.borderL,
+        primary: p.primaryL || p.primary,
+        accent: p.accentL || p.accent,
+        text: p.textL,
+        muted: p.mutedL,
+        'on-primary': p.onPrimaryL || '#ffffff',
+        'on-accent': p.onAccentL || '#ffffff',
+      });
+      const activeSet = (p) =>
+        state.mode === 'light' ? lightSet(p) : darkSet(p);
+      const $ = (s) => document.querySelector(s);
+      const root = document.documentElement;
+
+      function logoSvg(accentVar) {
+        return LOGOS[state.logo].svg(accentVar);
+      }
+
+      function buildSidebar() {
+        $('#palOpts').innerHTML = Object.entries(PALETTES)
+          .map(
+            ([k, p]) => `
+          <button class="opt" data-kind="pal" data-key="${k}">
+            <span class="swatches">
+              <i style="background:${p.primary}"></i>
+              <i style="background:${p.accent}"></i>
+              <i style="background:${p.bg};box-shadow:inset 0 0 0 1px #333"></i>
+            </span>
+            <span class="name">${p.name}<span class="hint">${p.hint}</span></span>
+          </button>`
+          )
+          .join('');
+
+        $('#fontOpts').innerHTML = Object.entries(FONT_GROUPS)
+          .map(
+            ([grp, title]) => `
+          <span class="famLabel">${title}</span>
+          ${Object.entries(FONTS)
+            .filter(([, f]) => f.group === grp)
+            .map(
+              ([k, f]) => `
+            <button class="opt" data-kind="font" data-key="${k}">
+              <span class="name" style="font-family:${f.display}">${f.name}<span class="hint" style="font-family:'Inter',sans-serif">${f.hint}</span></span>
+            </button>`
+            )
+            .join('')}`
+          )
+          .join('');
+
+        $('#logoOpts').innerHTML = Object.entries(FAMILIES)
+          .map(
+            ([fam, title]) => `
+          <span class="famLabel">${title}</span>
+          ${byFamily(fam)
+            .map(
+              ([k, l]) => `
+            <button class="opt" data-kind="logo" data-key="${k}">
+              <span class="miniLogo">${l.svg('currentColor')}</span>
+              <span class="name">${l.name}</span>
+            </button>`
+            )
+            .join('')}`
+          )
+          .join('');
+      }
+
+      function buildLogoGrid() {
+        $('#logoGrid').innerHTML = Object.entries(FAMILIES)
+          .map(
+            ([fam, title]) => `
+          <h3 class="famHead">${title}</h3>
+          <div class="famGrid">
+            ${byFamily(fam)
+              .map(
+                ([k, l]) => `
+              <button class="logoCell" data-kind="logo" data-key="${k}">
+                ${l.svg('var(--primary)')}
+                <span class="cap"><b>${l.name}</b>${l.hint}</span>
+              </button>`
+              )
+              .join('')}
+          </div>`
+          )
+          .join('');
+      }
+
+      function renderScale() {
+        const s = (px, label, cls = '') =>
+          `<div class="scaleItem"><div class="${cls}" style="width:${px}px;height:${px}px">${logoSvg('var(--primary)')}</div><span>${label}</span></div>`;
+        $('#scaleRow').innerHTML =
+          s(96, '96px') +
+          s(48, '48px') +
+          s(32, '32px favicon') +
+          s(16, '16px onglet') +
+          `<div class="scaleItem"><div class="onAccent" style="width:64px;height:64px"><div style="width:44px;height:44px">${logoSvg('var(--on-primary)')}</div></div><span>sur aplat</span></div>` +
+          s(64, 'monochrome').replace('var(--primary)', 'currentColor');
+      }
+
+      function renderLockups() {
+        const inner = (accent) => `
+          <div class="lockH">
+            ${logoSvg(accent)}
+            <span class="wm">Julien Chapuy<small>Ingénieur IA freelance · Osaka</small></span>
+          </div>`;
+        $('#lockDark').innerHTML = inner('var(--primary-d)');
+        $('#lockLight').innerHTML = inner('var(--primary-l)');
+      }
+
+      function renderTokens() {
+        const p = PALETTES[state.pal];
+        const s = activeSet(p);
+        const rows = [
+          ['--background', s.bg],
+          ['--surface', s.surface],
+          ['--border', s.border],
+          ['--primary', s.primary],
+          ['--accent', s.accent],
+          ['--text', s.text],
+          ['--text-muted', s.muted],
+          ['--on-primary', s['on-primary']],
+          ['--on-accent', s['on-accent']],
+          ...Object.entries(p.extra || {}),
+        ];
+        $('#tokens').innerHTML = rows
+          .map(
+            ([n, v]) => `
+          <div class="tok" data-copy="${v}">
+            <div class="chip" style="background:${v}"></div>
+            <div class="meta"><b>${n}</b><span>${v}</span></div>
+          </div>`
+          )
+          .join('');
+      }
+
+      function apply() {
+        const p = PALETTES[state.pal];
+        const f = FONTS[state.font];
+
+        const set = activeSet(p);
+
+        // jeu actif (suit le mode clair/sombre)
+        Object.entries(set).forEach(([k, v]) =>
+          root.style.setProperty('--' + k, v)
+        );
+        // jeux figés, pour les deux lockups côte à côte
+        Object.entries(darkSet(p)).forEach(([k, v]) =>
+          root.style.setProperty('--' + k + '-d', v)
+        );
+        Object.entries(lightSet(p)).forEach(([k, v]) =>
+          root.style.setProperty('--' + k + '-l', v)
+        );
+        // tokens sémantiques éventuels
+        Object.entries(p.extra || {}).forEach(([k, v]) =>
+          root.style.setProperty(k, v)
+        );
+
+        root.style.setProperty('--font-display', f.display);
+        root.style.setProperty('--font-body', f.body);
+        root.style.setProperty('--font-mono', f.mono);
+        root.style.setProperty('--display-weight', f.weight);
+        root.style.setProperty('--display-tracking', f.tracking);
+
+        $('#bannerLogo').innerHTML = logoSvg('var(--accent)');
+        $('#navLogo').innerHTML = logoSvg('var(--primary)');
+        $('#fontSpec').textContent = f.spec;
+
+        renderScale();
+        renderLockups();
+        renderTokens();
+        renderEditor();
+
+        document.querySelectorAll('[data-kind]').forEach((el) => {
+          el.setAttribute(
+            'aria-pressed',
+            String(state[el.dataset.kind] === el.dataset.key)
+          );
+        });
+
+        $('#vPal').textContent = p.name;
+        $('#vFont').textContent = f.name;
+        $('#vLogo').textContent = LOGOS[state.logo].name;
+      }
+
+      document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-kind]');
+        if (b) {
+          state[b.dataset.kind] = b.dataset.key;
+          apply();
+          return;
+        }
+        const t = e.target.closest('[data-copy]');
+        if (t) {
+          navigator.clipboard?.writeText(t.dataset.copy);
+          const m = t.querySelector('.meta b');
+          const old = m.textContent;
+          m.textContent = 'copié ✓';
+          setTimeout(() => (m.textContent = old), 900);
+        }
+      });
+
+      $('#btnSafe').addEventListener('click', function () {
+        document.body.classList.toggle('hideSafe');
+        this.setAttribute(
+          'aria-pressed',
+          String(!document.body.classList.contains('hideSafe'))
+        );
+      });
+
+      $('#btnLight').addEventListener('click', function () {
+        state.mode = state.mode === 'dark' ? 'light' : 'dark';
+        this.setAttribute('aria-pressed', String(state.mode === 'light'));
+        apply();
+      });
+
+      $('#btnCopy').addEventListener('click', function () {
+        const txt = `Palette: ${state.pal} (${state.mode}) · Typo: ${state.font} · Logo: ${state.logo}`;
+        navigator.clipboard?.writeText(txt);
+        this.textContent = 'Copié ✓';
+        setTimeout(() => (this.textContent = 'Copier la combinaison'), 1200);
+      });
+
+      // met la bannière 1584px à l'échelle du conteneur
+      function fitBanner() {
+        const w = $('#bannerWrap').clientWidth;
+        const k = w / 1584;
+        const s = $('#bannerScale');
+        s.style.transform = `scale(${k})`;
+        $('#bannerWrap').style.height = 396 * k + 'px';
+      }
+      window.addEventListener('resize', fitBanner);
+
+      /* =======================================================
+         ÉDITEUR DE PALETTE PERSONNALISÉE
+         ======================================================= */
+      const EDIT_TOKENS = [
+        ['bg', 'bgL', '--background', 'bg'],
+        ['surface', 'surfaceL', '--surface', 'surface'],
+        ['border', 'borderL', '--border', 'border'],
+        ['primary', 'primaryL', '--primary', 'primary'],
+        ['accent', 'accentL', '--accent', 'accent'],
+        ['text', 'textL', '--text', 'text'],
+        ['muted', 'mutedL', '--text-muted', 'muted'],
+        ['onPrimary', 'onPrimaryL', '--on-primary', 'on-primary'],
+        ['onAccent', 'onAccentL', '--on-accent', 'on-accent']
+      ];
+      const AUTO_FIELDS = ['onPrimary', 'onPrimaryL', 'onAccent', 'onAccentL'];
+      const STORE_KEY = 'jc-brand-custom';
+      const fieldOf = (t) => (state.mode === 'light' ? t[1] : t[0]);
+
+      /* --- contraste WCAG --- */
+      function parseHex(h) {
+        if (typeof h !== 'string') return null;
+        let s = h.trim().replace('#', '');
+        if (s.length === 3)
+          s = s
+            .split('')
+            .map((c) => c + c)
+            .join('');
+        if (!/^[0-9a-fA-F]{6}$/.test(s)) return null;
+        return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16));
+      }
+      const normHex = (h) => {
+        const r = parseHex(h);
+        return r
+          ? '#' + r.map((v) => v.toString(16).padStart(2, '0')).join('')
+          : null;
+      };
+      function luminance(hex) {
+        const rgb = parseHex(hex);
+        if (!rgb) return 0;
+        const [r, g, b] = rgb.map((v) => {
+          const c = v / 255;
+          return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      }
+      function contrast(a, b) {
+        const l1 = luminance(a);
+        const l2 = luminance(b);
+        return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      }
+      /* meilleur texte lisible sur un aplat : blanc ou quasi-noir */
+      const bestOn = (bgHex) =>
+        contrast('#ffffff', bgHex) >= contrast('#111111', bgHex)
+          ? '#ffffff'
+          : '#111111';
+
+      /* --- création / persistance --- */
+      function seedCustom(srcKey) {
+        const p = PALETTES[srcKey] || PALETTES.aishu;
+        const d = darkSet(p);
+        const l = lightSet(p);
+        return {
+          name: 'Personnalisée',
+          hint: 'La tienne · éditable en section 8',
+          isCustom: true,
+          bg: d.bg,
+          surface: d.surface,
+          border: d.border,
+          primary: d.primary,
+          accent: d.accent,
+          text: d.text,
+          muted: d.muted,
+          onPrimary: d['on-primary'],
+          onAccent: d['on-accent'],
+          bgL: l.bg,
+          surfaceL: l.surface,
+          borderL: l.border,
+          primaryL: l.primary,
+          accentL: l.accent,
+          textL: l.text,
+          mutedL: l.muted,
+          onPrimaryL: l['on-primary'],
+          onAccentL: l['on-accent']
+        };
+      }
+      function saveCustom() {
+        try {
+          localStorage.setItem(STORE_KEY, JSON.stringify(PALETTES.custom));
+        } catch (e) {
+          /* mode privé : on continue sans persistance */
+        }
+      }
+      function loadCustom() {
+        try {
+          const raw = localStorage.getItem(STORE_KEY);
+          if (raw) return Object.assign(seedCustom('retenue'), JSON.parse(raw));
+        } catch (e) {
+          /* JSON corrompu : on repart du défaut */
+        }
+        return seedCustom('retenue');
+      }
+
+      /* --- rendu --- */
+      let editorBuiltFor = null;
+      function renderEditor(force) {
+        const p = PALETTES.custom;
+        $('#edMode').textContent =
+          state.mode === 'light' ? 'mode clair' : 'mode sombre';
+
+        if (force || editorBuiltFor !== state.mode) {
+          $('#editor').innerHTML = EDIT_TOKENS.map((t) => {
+            const f = fieldOf(t);
+            const v = p[f];
+            const auto = AUTO_FIELDS.includes(f)
+              ? `<button class="edAuto" data-auto="${f}" title="Choisir automatiquement la meilleure lisibilité">auto</button>`
+              : '';
+            return `<label class="edRow">
+              <input type="color" value="${v}" data-field="${f}">
+              <span class="edName">${t[2]}</span>
+              ${auto}
+              <input type="text" class="edHex" value="${v}" data-field="${f}" spellcheck="false">
+            </label>`;
+          }).join('');
+          editorBuiltFor = state.mode;
+        } else {
+          // mise à jour en place : ne casse pas le champ en cours de saisie
+          $('#editor')
+            .querySelectorAll('[data-field]')
+            .forEach((el) => {
+              if (el === document.activeElement) return;
+              const v = p[el.dataset.field];
+              if (el.value.toLowerCase() !== v.toLowerCase()) el.value = v;
+            });
+        }
+        renderContrast();
+      }
+
+      function renderContrast() {
+        const s = activeSet(PALETTES[state.pal]);
+        const rows = [
+          ['text / background', s.text, s.bg, 4.5],
+          ['text-muted / background', s.muted, s.bg, 4.5],
+          ['text / surface', s.text, s.surface, 4.5],
+          ['on-primary / primary', s['on-primary'], s.primary, 4.5],
+          ['on-accent / accent', s['on-accent'], s.accent, 4.5],
+          ['primary / background', s.primary, s.bg, 3],
+          ['border / background', s.border, s.bg, 1.5]
+        ];
+        $('#contrastRows').innerHTML = rows
+          .map(([label, a, b, min]) => {
+            const r = contrast(a, b);
+            const cls = r >= min ? 'ok' : r >= min * 0.75 ? 'warn' : 'fail';
+            const tag = r >= min ? (r >= 7 ? 'AAA' : 'AA') : 'échec';
+            return `<div class="cRow">
+              <span class="pair">${label}</span>
+              <span class="val">${r.toFixed(2)}:1</span>
+              <span class="badge ${cls}">${tag}</span>
+            </div>`;
+          })
+          .join('');
+      }
+
+      function exportCss() {
+        const p = PALETTES[state.pal];
+        const block = (set, label) =>
+          `/* ${label} */\n:root {\n` +
+          EDIT_TOKENS.map((t) => `  ${t[2]}: ${set[t[3]]};`).join('\n') +
+          (p.extra
+            ? '\n' +
+              Object.entries(p.extra)
+                .map(([k, v]) => `  ${k}: ${v};`)
+                .join('\n')
+            : '') +
+          '\n}';
+        return (
+          block(lightSet(p), `${p.name} — mode clair`) +
+          '\n\n' +
+          block(darkSet(p), `${p.name} — mode sombre`)
+        );
+      }
+
+      /* --- interactions --- */
+      function setToken(field, raw) {
+        const hex = normHex(raw);
+        if (!hex) return false;
+        PALETTES.custom[field] = hex;
+        if (state.pal !== 'custom') {
+          state.pal = 'custom';
+          buildSidebar();
+        }
+        saveCustom();
+        apply();
+        return true;
+      }
+
+      $('#editor').addEventListener('input', (e) => {
+        const el = e.target;
+        if (!el.dataset.field) return;
+        const ok = setToken(el.dataset.field, el.value);
+        if (el.classList.contains('edHex')) el.classList.toggle('bad', !ok);
+      });
+
+      $('#editor').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-auto]');
+        if (!b) return;
+        const f = b.dataset.auto;
+        const p = PALETTES.custom;
+        const base = f.startsWith('onPrimary')
+          ? f.endsWith('L')
+            ? p.primaryL
+            : p.primary
+          : f.endsWith('L')
+            ? p.accentL
+            : p.accent;
+        setToken(f, bestOn(base));
+        renderEditor(true);
+      });
+
+      $('#btnFork').addEventListener('click', () => {
+        PALETTES.custom = seedCustom(state.pal);
+        state.pal = 'custom';
+        saveCustom();
+        buildSidebar();
+        renderEditor(true);
+        apply();
+      });
+
+      $('#btnAutoContrast').addEventListener('click', () => {
+        const p = PALETTES.custom;
+        p.onPrimary = bestOn(p.primary);
+        p.onAccent = bestOn(p.accent);
+        p.onPrimaryL = bestOn(p.primaryL);
+        p.onAccentL = bestOn(p.accentL);
+        state.pal = 'custom';
+        saveCustom();
+        buildSidebar();
+        renderEditor(true);
+        apply();
+      });
+
+      $('#btnResetPal').addEventListener('click', () => {
+        PALETTES.custom = seedCustom('retenue');
+        saveCustom();
+        renderEditor(true);
+        apply();
+      });
+
+      $('#btnExport').addEventListener('click', function () {
+        navigator.clipboard?.writeText(exportCss());
+        this.textContent = 'CSS copié ✓';
+        setTimeout(() => (this.textContent = 'Exporter le CSS'), 1400);
+      });
+
+      /* =======================================================
+         DÉMARRAGE
+         ======================================================= */
+      PALETTES.custom = loadCustom();
+      buildSidebar();
+      buildLogoGrid();
+      apply();
+      fitBanner();
+    </script>
+  </body>
+</html>
