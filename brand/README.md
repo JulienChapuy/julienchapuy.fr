@@ -46,15 +46,15 @@ Un bouton primaire ne peut pas coder son texte en blanc en dur — dès que `--p
 
 ### Contrastes WCAG vérifiés
 
-| Paire | Sombre | Clair |
-|---|---|---|
-| text / background | 17.03:1 AAA | 14.20:1 AAA |
-| text-muted / background | 8.59:1 AAA | 4.70:1 AA |
-| text / surface | 15.74:1 AAA | 15.14:1 AAA |
-| on-primary / primary | 6.41:1 AA | 8.08:1 AAA |
-| on-accent / accent | 6.66:1 AA | 4.92:1 AA |
-| primary / background | 6.52:1 AA | 7.58:1 AAA |
-| accent / background | 6.77:1 AA | 4.62:1 AA |
+| Paire                   | Sombre      | Clair       |
+| ----------------------- | ----------- | ----------- |
+| text / background       | 17.03:1 AAA | 14.20:1 AAA |
+| text-muted / background | 8.59:1 AAA  | 4.70:1 AA   |
+| text / surface          | 15.74:1 AAA | 15.14:1 AAA |
+| on-primary / primary    | 6.41:1 AA   | 8.08:1 AAA  |
+| on-accent / accent      | 6.66:1 AA   | 4.92:1 AA   |
+| primary / background    | 6.52:1 AA   | 7.58:1 AAA  |
+| accent / background     | 6.77:1 AA   | 4.62:1 AA   |
 
 Point de vigilance : `text-muted` en mode clair est à 4.70:1, juste au-dessus du seuil AA (4.5). Pas de marge — à éviter en dessous de 16px ou en graisse fine. `#5E6960` donnerait 5.4:1 pour un écart visuel imperceptible, si besoin de marge.
 
@@ -78,6 +78,7 @@ Sceau (hanko) à cadre interrompu (bord d'encre) + monogramme JC en traits droit
 ### Limite connue — favicon 16px
 
 Le cadre + JC intérieur ne survit pas à 16px : la forme devient illisible. Deux marques distinctes sont utilisées :
+
 - **sceau complet** (`brand/logo/mark-full-*.svg`) → bannière, avatar, signature, en-tête de site
 - **Chanfreins 45°** (`brand/logo/mark-reduced-*.svg`, `public/favicon.svg`) → favicon, navbar en petit format. Traits droits, cohérente avec le tensho.
 
@@ -102,15 +103,15 @@ https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=B
 
 ## Exports livrés
 
-| Fichier | Usage |
-|---|---|
-| `brand/logo/mark-full-dark.svg` / `mark-full-light.svg` | Sceau complet, bicolore, sur fond sombre / clair |
-| `brand/logo/mark-full-mono-dark.svg` / `mark-full-mono-light.svg` | Sceau complet, monochrome (print, tampon) |
-| `brand/logo/mark-reduced-dark.svg` / `mark-reduced-light.svg` | Chanfreins 45°, petites tailles |
-| `public/favicon.svg` | Favicon actif du site, réactif à `prefers-color-scheme` |
-| `public/assets/img/icon.png` | Icône 512×512 (onglet navigateur, apple-touch-icon) |
-| `brand/exports/banner-linkedin-1584x396.png` | Bannière LinkedIn, capturée en conditions réelles (Chromium, polices chargées), livrée en 3168×792 (2×) |
-| `brand/palette.css` | Tokens palette prêts à l'import |
+| Fichier                                                           | Usage                                                                                                   |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `brand/logo/mark-full-dark.svg` / `mark-full-light.svg`           | Sceau complet, bicolore, sur fond sombre / clair                                                        |
+| `brand/logo/mark-full-mono-dark.svg` / `mark-full-mono-light.svg` | Sceau complet, monochrome (print, tampon)                                                               |
+| `brand/logo/mark-reduced-dark.svg` / `mark-reduced-light.svg`     | Chanfreins 45°, petites tailles                                                                         |
+| `public/favicon.svg`                                              | Favicon actif du site, réactif à `prefers-color-scheme`                                                 |
+| `public/assets/img/icon.png`                                      | Icône 512×512 (onglet navigateur, apple-touch-icon)                                                     |
+| `brand/exports/banner-linkedin-1584x396.png`                      | Bannière LinkedIn, capturée en conditions réelles (Chromium, polices chargées), livrée en 3168×792 (2×) |
+| `brand/palette.css`                                               | Tokens palette prêts à l'import                                                                         |
 
 `src/styles/global.scss` et `src/layouts/Layout.astro` sont patchés avec la palette et la typographie ci-dessus.
 
