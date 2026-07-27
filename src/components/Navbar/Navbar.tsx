@@ -111,8 +111,40 @@ const Navbar: React.FC<NavbarProps> = ({
       >
         <div className={styles['nav-container']}>
           <div className={styles['nav-left']}>
-            <a className={styles.logo} href={homeLink}>
-              <img src="/favicon.svg" alt="Logo" width="24" height="24" />
+            <a className={styles.logo} href={homeLink} aria-label="Accueil">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 96 96"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M30 13 H83 V56"
+                  stroke="var(--primary)"
+                  strokeWidth="7"
+                  strokeLinejoin="miter"
+                />
+                <path
+                  d="M66 83 H13 V40"
+                  stroke="var(--accent)"
+                  strokeWidth="7"
+                  strokeLinejoin="miter"
+                />
+                <path
+                  d="M68 36 V30 H50 V66 H68 V60"
+                  stroke="var(--text)"
+                  strokeWidth="7"
+                  strokeLinejoin="miter"
+                />
+                <path
+                  d="M40 30 V56 H28 V48"
+                  stroke="var(--text)"
+                  strokeWidth="7"
+                  strokeLinejoin="miter"
+                />
+              </svg>
             </a>
           </div>
 
