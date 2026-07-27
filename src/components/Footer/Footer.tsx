@@ -8,6 +8,7 @@ interface FooterProps {
     address: string;
     phone: string;
     email: string;
+    rights: string;
   };
 }
 
@@ -53,8 +54,7 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
 
         <div className={styles['footer-bottom']}>
           <p>
-            &copy; {new Date().getFullYear()} Julien Chapuy. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} Julien Chapuy. {content.rights}
           </p>
         </div>
       </div>

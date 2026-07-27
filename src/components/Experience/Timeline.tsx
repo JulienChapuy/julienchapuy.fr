@@ -42,7 +42,13 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
             {stack.map((tech, i) => (
               <span key={i} className={styles['tech-badge']} title={tech.name}>
                 {tech.icon.startsWith('/') ? (
-                  <img src={tech.icon} alt={tech.name} />
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    width="22"
+                    height="22"
+                    loading="lazy"
+                  />
                 ) : (
                   <i className={tech.icon}></i>
                 )}

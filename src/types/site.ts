@@ -105,12 +105,15 @@ export interface ContactContent {
   address: string;
   phone: string;
   email: string;
+  rights: string;
   form: {
     name: string;
     email: string;
     subject: string;
     message: string;
     btn: string;
+    fallbackSubject: string;
+    sending: string;
   };
 }
 

@@ -251,12 +251,15 @@ export const en: SiteData = {
     address: 'Osaka, Japan · Remote',
     phone: 'linkedin.com/in/julien-chapuy',
     email: 'pro@julienchapuy.fr',
+    rights: 'All rights reserved.',
     form: {
       name: 'Your Name',
       email: 'Your Email (optional)',
       subject: 'Subject',
       message: 'Message',
       btn: 'Send Message',
+      fallbackSubject: 'Contact from website',
+      sending: 'Opening your email client…',
     },
   },
   pages: {

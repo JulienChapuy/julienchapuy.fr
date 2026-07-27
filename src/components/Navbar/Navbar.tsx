@@ -78,13 +78,11 @@ const Navbar: React.FC<NavbarProps> = ({
   const contactContent = allContact[lang];
 
   const isActive = (path: string) => {
-    if (
-      path === '/' &&
-      (currentPath === '/' || currentPath === '/en' || currentPath === '/en/')
-    )
-      return true;
-    if (path !== '/' && path !== '#' && currentPath === path) return true;
-    return false;
+    const normalize = (p: string) => p.replace(/\/$/, '') || '/';
+    const current = normalize(currentPath);
+    const target = normalize(path);
+    if (target === '/') return current === '/' || current === '/en';
+    return target !== '#' && current === target;
   };
 
   const basePath = lang === 'fr' ? '' : '/en';
@@ -160,7 +158,7 @@ const Navbar: React.FC<NavbarProps> = ({
               </li>
               <li>
                 <a
-                  className={`${isActive('about') ? styles.active : ''}`}
+                  className={`${isActive(aboutLink) ? styles.active : ''}`}
                   href={aboutLink}
                 >
                   {labels.about}
@@ -168,7 +166,7 @@ const Navbar: React.FC<NavbarProps> = ({
               </li>
               <li>
                 <a
-                  className={`${isActive('blog') ? styles.active : ''}`}
+                  className={`${isActive(blogLink) ? styles.active : ''}`}
                   href={blogLink}
                 >
                   {labels.blog}
@@ -176,7 +174,7 @@ const Navbar: React.FC<NavbarProps> = ({
               </li>
               <li>
                 <a
-                  className={`${isActive('resume') ? styles.active : ''}`}
+                  className={`${isActive(resumeLink) ? styles.active : ''}`}
                   href={resumeLink}
                 >
                   {labels.resume}
@@ -236,7 +234,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </li>
             <li>
               <a
-                className={`${isActive('about') ? styles.active : ''}`}
+                className={`${isActive(aboutLink) ? styles.active : ''}`}
                 href={aboutLink}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -245,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </li>
             <li>
               <a
-                className={`${isActive('blog') ? styles.active : ''}`}
+                className={`${isActive(blogLink) ? styles.active : ''}`}
                 href={blogLink}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -254,7 +252,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </li>
             <li>
               <a
-                className={`${isActive('resume') ? styles.active : ''}`}
+                className={`${isActive(resumeLink) ? styles.active : ''}`}
                 href={resumeLink}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

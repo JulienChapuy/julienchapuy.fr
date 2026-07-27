@@ -24,7 +24,7 @@ const LogoLoop: React.FC<LogoLoopProps> = ({ stack }) => {
         {loopItems.map((item, index) => (
           <div key={index} className={styles['logo-item']}>
             {item.icon.startsWith('/') ? (
-              <img src={item.icon} alt={item.name} />
+              <img src={item.icon} alt={item.name} width="40" height="40" />
             ) : (
               <i className={item.icon}></i>
             )}

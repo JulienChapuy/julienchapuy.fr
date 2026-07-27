@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ContactModal.module.scss';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -14,6 +13,8 @@ interface ContactModalProps {
       subject: string;
       message: string;
       btn: string;
+      fallbackSubject: string;
+      sending: string;
     };
   };
 }
@@ -39,95 +40,93 @@ const ContactModal: React.FC<ContactModalProps> = ({
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     const values = new FormData(event.currentTarget);
-    const subject = String(values.get('subject') || 'Contact depuis le site');
+    const subject = String(
+      values.get('subject') || content.form.fallbackSubject
+    );
     const replyEmail = String(values.get('email') || '').trim();
     const bodyLines = [`Nom : ${values.get('name') || ''}`];
     if (replyEmail) bodyLines.push(`Email : ${replyEmail}`);
     bodyLines.push('', String(values.get('message') || ''));
     const body = bodyLines.join('\n');
-    setStatus('Ouverture de votre client email…');
+    setStatus(content.form.sending);
     window.location.href = `mailto:${content.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  if (!isOpen) return null;
-
   return (
-    <AnimatePresence>
-      <div className={styles['modal-overlay']} onClick={onClose}>
-        <motion.div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="contact-modal-title"
-          className={styles['modal-content']}
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ duration: 0.2 }}
-          onClick={(e) => e.stopPropagation()}
+    <div
+      className={`${styles['modal-overlay']} ${isOpen ? styles.open : ''}`}
+      onClick={onClose}
+      aria-hidden={!isOpen}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-modal-title"
+        className={styles['modal-content']}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className={styles['close-btn']}
+          onClick={onClose}
+          aria-label="Fermer"
         >
-          <button
-            className={styles['close-btn']}
-            onClick={onClose}
-            aria-label="Fermer"
-          >
-            &times;
-          </button>
+          &times;
+        </button>
 
-          <div className={styles['modal-header']}>
-            <h2 id="contact-modal-title">{content.send}</h2>
+        <div className={styles['modal-header']}>
+          <h2 id="contact-modal-title">{content.send}</h2>
+        </div>
+
+        <form className={styles['contact-form']} onSubmit={handleSubmit}>
+          <div className={styles['form-group']}>
+            <label htmlFor="modal-name">{content.form.name}</label>
+            <input
+              type="text"
+              id="modal-name"
+              name="name"
+              ref={firstFieldRef}
+              placeholder={content.form.name}
+              required
+            />
           </div>
-
-          <form className={styles['contact-form']} onSubmit={handleSubmit}>
-            <div className={styles['form-group']}>
-              <label htmlFor="modal-name">{content.form.name}</label>
-              <input
-                type="text"
-                id="modal-name"
-                name="name"
-                ref={firstFieldRef}
-                placeholder={content.form.name}
-                required
-              />
-            </div>
-            <div className={styles['form-group']}>
-              <label htmlFor="modal-email">{content.form.email}</label>
-              <input
-                type="email"
-                id="modal-email"
-                name="email"
-                placeholder={content.form.email}
-              />
-            </div>
-            <div className={styles['form-group']}>
-              <label htmlFor="modal-subject">{content.form.subject}</label>
-              <input
-                type="text"
-                id="modal-subject"
-                name="subject"
-                placeholder={content.form.subject}
-                required
-              />
-            </div>
-            <div className={styles['form-group']}>
-              <label htmlFor="modal-message">{content.form.message}</label>
-              <textarea
-                id="modal-message"
-                name="message"
-                rows={4}
-                placeholder={content.form.message}
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className={styles['submit-btn']}>
-              {content.form.btn}
-            </button>
-            <p role="status" aria-live="polite">
-              {status}
-            </p>
-          </form>
-        </motion.div>
+          <div className={styles['form-group']}>
+            <label htmlFor="modal-email">{content.form.email}</label>
+            <input
+              type="email"
+              id="modal-email"
+              name="email"
+              placeholder={content.form.email}
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <label htmlFor="modal-subject">{content.form.subject}</label>
+            <input
+              type="text"
+              id="modal-subject"
+              name="subject"
+              placeholder={content.form.subject}
+              required
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <label htmlFor="modal-message">{content.form.message}</label>
+            <textarea
+              id="modal-message"
+              name="message"
+              rows={4}
+              placeholder={content.form.message}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className={styles['submit-btn']}>
+            {content.form.btn}
+          </button>
+          <p role="status" aria-live="polite">
+            {status}
+          </p>
+        </form>
       </div>
-    </AnimatePresence>
+    </div>
   );
 };
 

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './ThemeToggle.module.scss';
 
 const ThemeToggle: React.FC = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof document === 'undefined') return 'dark';
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    return currentTheme === 'light' ? 'light' : 'dark';
+  });
 
   useEffect(() => {
     const currentTheme = document.documentElement.getAttribute('data-theme') as
