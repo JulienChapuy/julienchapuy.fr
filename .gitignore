@@ -17,6 +17,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# private LinkedIn export generated locally
+linkedin-profile.md
+data/
+
 # macOS-specific files
 .DS_Store
 
