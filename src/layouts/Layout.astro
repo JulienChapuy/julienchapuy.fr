@@ -97,6 +97,39 @@ import BackToTop from '../components/ui/BackToTop';
 
         applyTheme();
         document.addEventListener('astro:after-swap', applyTheme);
+
+        // Détection de langue au premier passage : site statique, donc pas
+        // de négociation serveur possible (Accept-Language). On se cale une
+        // seule fois sur la langue du navigateur, puis on mémorise le choix
+        // (auto ou manuel via le sélecteur EN/FR) pour ne plus jamais
+        // rediriger ensuite — un lien profond partagé reste dans sa langue
+        // pour tout visiteur qui a déjà une préférence enregistrée.
+        try {
+          if (!localStorage.getItem('lang-pref')) {
+            const path = window.location.pathname;
+            const isEnglishPath = /^\/en(?:\/|$)/.test(path);
+            const browserLang = (
+              navigator.language ||
+              (navigator.languages && navigator.languages[0]) ||
+              'en'
+            ).toLowerCase();
+            const wantsEnglish = !browserLang.startsWith('fr');
+
+            localStorage.setItem('lang-pref', wantsEnglish ? 'en' : 'fr');
+
+            if (wantsEnglish !== isEnglishPath) {
+              const newPath = wantsEnglish
+                ? '/en' + (path === '/' ? '' : path)
+                : path.replace(/^\/en(?=\/|$)/, '') || '/';
+              window.location.replace(
+                newPath + window.location.search + window.location.hash
+              );
+            }
+          }
+        } catch (e) {
+          // localStorage indisponible (navigation privée stricte) : on
+          // reste simplement sur la langue de l'URL visitée.
+        }
       })();
     </script>
   </head>

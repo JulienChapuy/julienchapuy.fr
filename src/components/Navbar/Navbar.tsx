@@ -192,7 +192,13 @@ const Navbar: React.FC<NavbarProps> = ({
             >
               {labels.contact}
             </button>
-            <a className={styles['lang-toggle']} href={toggleLangLink}>
+            <a
+              className={styles['lang-toggle']}
+              href={toggleLangLink}
+              onClick={() =>
+                localStorage.setItem('lang-pref', lang === 'fr' ? 'en' : 'fr')
+              }
+            >
               {lang === 'fr' ? 'EN' : 'FR'}
             </a>
             <ThemeToggle />
