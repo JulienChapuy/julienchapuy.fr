@@ -1,31 +1,31 @@
 :root {
-  --bg: #09090b;
-  --surface: #121214;
-  --border: #27272a;
-  --primary: #6366f1;
-  --primary-muted: rgba(99, 102, 241, 0.1);
-  --text: #fafafa;
-  --text-muted: #a1a1aa;
+  --bg: #0b0f0d;
+  --surface: #131915;
+  --border: #2a332d;
+  --primary: #5fa47e;
+  --primary-muted: rgba(95, 164, 126, 0.12);
+  --accent: #d4874c;
+  --text: #edf2ee;
+  --text-muted: #a4b0a8;
+  --on-primary: #07130d;
+  --on-accent: #1b0d04;
   --radius: 12px;
-  --bg-header: rgba(9, 9, 11, 0.8);
-  --logo-filter: invert(0);
+  --font-display: 'Bricolage Grotesque', 'Inter', sans-serif;
+  --bg-header: rgba(11, 15, 13, 0.8);
 }
 
 [data-theme='light'] {
-  --bg: #ffffff;
-  --surface: #f8fafc;
-  /* Slate-50 */
-  --border: #e2e8f0;
-  /* Slate-200 */
-  --primary: #6366f1;
-  /* Indigo-500 */
-  --primary-muted: rgba(99, 102, 241, 0.15);
-  --text: #0f172a;
-  /* Slate-900 */
-  --text-muted: #64748b;
-  /* Slate-500 */
-  --bg-header: rgba(255, 255, 255, 0.8);
-  --logo-filter: invert(1);
+  --bg: #f7f8f5;
+  --surface: #ffffff;
+  --border: #d8ded7;
+  --primary: #285943;
+  --primary-muted: rgba(40, 89, 67, 0.12);
+  --accent: #a85d2a;
+  --text: #202821;
+  --text-muted: #677269;
+  --on-primary: #ffffff;
+  --on-accent: #ffffff;
+  --bg-header: rgba(247, 248, 245, 0.8);
 }
 
 body {
@@ -50,6 +50,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: var(--font-display);
   color: var(--text);
   letter-spacing: -0.02em;
   font-weight: 600;
@@ -101,12 +102,12 @@ section {
   background:
     radial-gradient(
       circle at top right,
-      rgba(99, 102, 241, 0.08),
+      color-mix(in srgb, var(--primary) 8%, transparent),
       transparent 40%
     ),
     radial-gradient(
       circle at bottom left,
-      rgba(139, 92, 246, 0.05),
+      color-mix(in srgb, var(--accent) 5%, transparent),
       transparent 40%
     );
   border-bottom: 1px solid var(--border);
@@ -116,9 +117,13 @@ section {
   background-color: transparent !important;
 }
 
-/* Typography Fixes */
+/* Typography Fixes — neutralise le gabarit hérité (uppercase/gras forcés) */
 .title-a {
+  font-family: var(--font-display);
   font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: none;
   margin-bottom: 1rem;
 }
 
@@ -130,7 +135,7 @@ section {
 }
 
 .line-mf {
-  background-color: var(--primary);
+  background-color: var(--accent);
   height: 4px;
   width: 40px;
   margin: 1.5rem auto 0;
@@ -144,7 +149,7 @@ section {
   font-size: 0.95rem;
   font-weight: 500;
   transition: opacity 0.2s;
-  color: white !important;
+  color: var(--on-primary) !important;
 }
 
 .btn-primary:hover {
@@ -169,6 +174,10 @@ a {
   transition: opacity 0.2s;
 }
 
+/* le CSS hérité du template définit aussi a:hover { color } avec la même
+   spécificité — cette règle doit rester déclarée après lui et redéclarer
+   color explicitement, sinon le bleu du template gagne le conflit. */
 a:hover {
+  color: var(--primary);
   opacity: 0.8;
 }
