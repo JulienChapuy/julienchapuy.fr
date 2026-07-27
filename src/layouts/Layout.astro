@@ -3,12 +3,14 @@ interface Props {
   title: string;
   description?: string;
   lang?: 'fr' | 'en';
+  structuredData?: Record<string, unknown>;
 }
 
 const {
   title,
   description = 'AI Engineer spécialisé en LLM, architectures RAG et systèmes backend scalables.',
   lang = 'fr',
+  structuredData,
 } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const frPath = path.startsWith('/en') ? path.slice(3) || '/' : path;
@@ -50,6 +52,15 @@ import BackToTop from '../components/ui/BackToTop';
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    {
+      structuredData && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

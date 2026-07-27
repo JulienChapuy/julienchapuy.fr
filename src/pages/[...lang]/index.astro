@@ -19,12 +19,31 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.props;
 const data = siteData[lang as 'fr' | 'en'];
+const site = Astro.site ?? Astro.url;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Julien Chapuy',
+  url: new URL('/', site).toString(),
+  sameAs: [
+    'https://linkedin.com/in/julien-chapuy',
+    'https://github.com/JulienChapuy',
+  ],
+  email: data.contact.email,
+  jobTitle: data.intro.greeting,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Osaka',
+    addressCountry: 'Japan',
+  },
+};
 ---
 
 <Layout
   title={data.meta.title}
   description={data.meta.description}
   lang={lang as 'fr' | 'en'}
+  structuredData={structuredData}
 >
   <Intro client:load content={data.intro} stack={data.intro.stack} />
 
