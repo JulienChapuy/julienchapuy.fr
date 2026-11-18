@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   build:
+    if: ${{ github.server_url == 'https://github.com' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -49,6 +50,7 @@ jobs:
           retention-days: 1
 
   deploy:
+    if: ${{ github.server_url == 'https://github.com' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -1,0 +1,49 @@
+name: Verify site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container: oven/bun:1.3.14-debian
+    steps:
+      - name: Install Git
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends ca-certificates git
+          rm -rf /var/lib/apt/lists/*
+          command -v node >/dev/null 2>&1 || ln -sf "$(command -v bun)" /usr/local/bin/node
+      - name: Checkout repository
+        env:
+          GITEA_READ_TOKEN: ${{ secrets.GITEA_TOKEN }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git"
+          if [ -n "${GITEA_READ_TOKEN:-}" ]; then
+            auth_header="$(printf 'x-access-token:%s' "$GITEA_READ_TOKEN" | base64 | tr -d '\n')"
+            GIT_CONFIG_COUNT=1 \
+            GIT_CONFIG_KEY_0="http.${GITHUB_SERVER_URL}/.extraheader" \
+            GIT_CONFIG_VALUE_0="Authorization: Basic ${auth_header}" \
+              git fetch --depth=1 origin "${GITHUB_SHA}"
+            unset auth_header
+          else
+            git fetch --depth=1 origin "${GITHUB_SHA}"
+          fi
+          unset GITEA_READ_TOKEN
+          git checkout --detach FETCH_HEAD
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Verify
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+        run: bun run verify
